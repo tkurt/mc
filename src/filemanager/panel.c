@@ -953,7 +953,7 @@ repaint_file (WPanel * panel, int file_index, gboolean mv, int attr, gboolean is
     {
         if (!panel_is_split && fln > 0)
         {
-            if (panel->list_format != list_long)
+            if (panel->list_type != list_long)
                 width = fln;
             else
             {
@@ -1489,7 +1489,7 @@ panel_destroy (WPanel * p)
     delete_format (p->status_format);
 
     g_free (p->user_format);
-    for (i = 0; i < LIST_FORMATS; i++)
+    for (i = 0; i < LIST_TYPES; i++)
         g_free (p->user_status_format[i]);
 
     g_free (p->dir.list);
@@ -1576,7 +1576,7 @@ panel_print_header (const WPanel * panel)
             {
                 g_string_set_size (format_txt, 0);
 
-                if (panel->list_format == list_long
+                if (panel->list_type == list_long
                     && strcmp (format->id, panel->sort_field->id) == 0)
                     g_string_append (format_txt,
                                      panel->sort_info.reverse
@@ -1584,7 +1584,8 @@ panel_print_header (const WPanel * panel)
 
                 g_string_append (format_txt, format->title);
 
-                if (panel->filter != NULL && strcmp (format->id, "name") == 0)
+                if (panel->filter != NULL && *panel->filter != '\0'
+                    && strcmp (format->id, "name") == 0)
                 {
                     g_string_append (format_txt, " [");
                     g_string_append (format_txt, panel->filter);
@@ -1611,7 +1612,7 @@ panel_print_header (const WPanel * panel)
 
     g_string_free (format_txt, TRUE);
 
-    if (panel->list_format != list_long)
+    if (panel->list_type != list_long)
         panel_paint_sort_info (panel);
 }
 
@@ -1911,7 +1912,7 @@ static const char *
 panel_format (WPanel * panel)
 {
 
-    switch (panel->list_format)
+    switch (panel->list_type)
     {
     case list_long:
         return "full perm space nlink space owner space group space size space mtime space name";
@@ -1946,9 +1947,9 @@ static const char *
 mini_status_format (WPanel * panel)
 {
     if (panel->user_mini_status)
-        return panel->user_status_format[panel->list_format];
+        return panel->user_status_format[panel->list_type];
 
-    switch (panel->list_format)
+    switch (panel->list_type)
     {
     case list_long:
         return "full perm space nlink space owner space group space size space mtime space name";
@@ -2065,7 +2066,7 @@ panel_select_ext_cmd (void)
         if (!mc_search_run (search, file_entry->fname, 0, file_entry->fnamelen, NULL))
             continue;
 
-        do_file_mark (current_panel, i, do_select);
+        do_file_mark (current_panel, i, do_select, 0);
     }
 
     mc_search_free (search);
@@ -2436,7 +2437,7 @@ move_end (WPanel * panel)
 static void
 do_mark_file (WPanel * panel, mark_act_t do_move)
 {
-    do_file_mark (panel, panel->selected, selection (panel)->f.marked ? 0 : 1);
+    do_file_mark (panel, panel->selected, selection (panel)->f.marked ? 0 : 1, 1);
     if ((panels_options.mark_moves_down && do_move == MARK_DOWN) || do_move == MARK_FORCE_DOWN)
         move_down (panel);
     else if (do_move == MARK_FORCE_UP)
@@ -2481,10 +2482,10 @@ mark_file_right (WPanel * panel)
     lines = MIN (lines, panel->dir.len - panel->selected - 1);
     for (; lines != 0; lines--)
     {
-        do_file_mark (panel, panel->selected, state_mark);
+        do_file_mark (panel, panel->selected, state_mark, 0);
         move_down (panel);
     }
-    do_file_mark (panel, panel->selected, state_mark);
+    do_file_mark (panel, panel->selected, state_mark, 0);
 }
 
 /* --------------------------------------------------------------------------------------------- */
@@ -2501,10 +2502,10 @@ mark_file_left (WPanel * panel)
     lines = MIN (lines, panel->selected + 1);
     for (; lines != 0; lines--)
     {
-        do_file_mark (panel, panel->selected, state_mark);
+        do_file_mark (panel, panel->selected, state_mark, 0);
         move_up (panel);
     }
-    do_file_mark (panel, panel->selected, state_mark);
+    do_file_mark (panel, panel->selected, state_mark, 0);
 }
 
 /* --------------------------------------------------------------------------------------------- */
@@ -2563,7 +2564,7 @@ panel_select_unselect_files (WPanel * panel, const char *title, const char *hist
             continue;
 
         if (mc_search_run (search, panel->dir.list[i].fname, 0, panel->dir.list[i].fnamelen, NULL))
-            do_file_mark (panel, i, do_select);
+            do_file_mark (panel, i, do_select, 2);
     }
 
     mc_search_free (search);
@@ -2607,7 +2608,7 @@ panel_select_invert_files (WPanel * panel)
         file_entry_t *file = &panel->dir.list[i];
 
         if (!panels_options.reverse_files_only || !S_ISDIR (file->st.st_mode))
-            do_file_mark (panel, i, !file->f.marked);
+            do_file_mark (panel, i, !file->f.marked, 0);
     }
 }
 
@@ -2856,18 +2857,6 @@ static inline gboolean
 do_enter (WPanel * panel)
 {
     return do_enter_on_file_entry (selection (panel));
-}
-
-
-/* --------------------------------------------------------------------------------------------- */
-
-static void
-panel_cycle_listing_format (WPanel * panel)
-{
-    panel->list_format = (panel->list_format + 1) % LIST_FORMATS;
-
-    if (set_panel_formats (panel) == 0)
-        do_refresh ();
 }
 
 /* --------------------------------------------------------------------------------------------- */
@@ -3448,9 +3437,6 @@ panel_execute_cmd (WPanel * panel, long command)
 
     switch (command)
     {
-    case CK_CycleListingFormat:
-        panel_cycle_listing_format (panel);
-        break;
     case CK_PanelOtherCd:
         chdir_other_panel (panel);
         break;
@@ -4333,7 +4319,7 @@ panel_new_with_dir (const char *panel_name, const vfs_path_t * vpath)
     panel->codepage = SELECT_CHARSET_NO_TRANSLATE;
 #endif
 
-    for (i = 0; i < LIST_FORMATS; i++)
+    for (i = 0; i < LIST_TYPES; i++)
         panel->user_status_format[i] = g_strdup (DEFAULT_USER_FORMAT);
 
     panel->search_buffer[0] = '\0';
@@ -4484,8 +4470,8 @@ set_panel_formats (WPanel * p)
     }
     if (retcode & 0x02)
     {
-        g_free (p->user_status_format[p->list_format]);
-        p->user_status_format[p->list_format] = g_strdup (DEFAULT_USER_FORMAT);
+        g_free (p->user_status_format[p->list_type]);
+        p->user_status_format[p->list_type] = g_strdup (DEFAULT_USER_FORMAT);
     }
 
     return retcode;
@@ -4552,7 +4538,7 @@ recalculate_panel_summary (WPanel * panel)
                So we have to first unmark it to get panel's summary information
                updated. (Norbert) */
             panel->dir.list[i].f.marked = 0;
-            do_file_mark (panel, i, 1);
+            do_file_mark (panel, i, 1, 0);
         }
 }
 
@@ -4560,7 +4546,7 @@ recalculate_panel_summary (WPanel * panel)
 /** This routine marks a file or a directory */
 
 void
-do_file_mark (WPanel * panel, int idx, int mark)
+do_file_mark (WPanel * panel, int idx, int mark, int mode)
 {
     if (panel->dir.list[idx].f.marked == mark)
         return;
@@ -4578,6 +4564,19 @@ do_file_mark (WPanel * panel, int idx, int mark)
         {
             if (panel->dir.list[idx].f.dir_size_computed)
                 panel->total += (uintmax_t) panel->dir.list[idx].st.st_size;
+            else {
+                if (panels_options.auto_dirsizes) {
+                    int old_mark_moves_down = panels_options.mark_moves_down;
+                    switch (mode) {
+                        case 1:
+                            panels_options.mark_moves_down = 0;
+                            single_dirsize_cmd ();
+                            panels_options.mark_moves_down = old_mark_moves_down;
+                        case 2:
+                            dirsizes_cmd ();
+                    }
+                }
+            }
             panel->dirs_marked++;
         }
         else

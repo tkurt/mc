@@ -19,6 +19,7 @@ typedef enum
 /*** structures declarations (and typedefs of structures)*****************************************/
 
 /*** global variables defined in .c file *********************************************************/
+static char *hotlist_file_name;
 
 /*** declarations of public functions ************************************************************/
 

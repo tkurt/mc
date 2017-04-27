@@ -36,7 +36,9 @@ EXTFS_IN    = 			\
 	ulib.in			\
 	urar.in			\
 	uzip.in			\
-	uzoo.in
+	uzoo.in			\
+	xnet.in			\
+	xsmb.in
 
 # Scripts that need adaptation to the local system - files to install
 EXTFS_OUT = 			\
@@ -66,7 +68,9 @@ EXTFS_OUT = 			\
 	ulib			\
 	urar			\
 	uzip			\
-	uzoo
+	uzoo			\
+	xnet			
+	xsmb
 
 if ENABLE_VFS
 extfs_DATA = $(EXTFS_MISC)

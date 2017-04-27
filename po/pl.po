@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Midnight Commander\n"
 "Report-Msgid-Bugs-To: http://www.midnight-commander.org/\n"
-"POT-Creation-Date: 2017-04-15 09:50+0300\n"
+"POT-Creation-Date: 2017-03-04 18:55+0100\n"
 "PO-Revision-Date: 2017-02-25 19:32+0000\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish (http://www.transifex.com/mc/mc/language/pl/)\n"
@@ -796,18 +796,14 @@ msgstr ""
 msgid "Color options"
 msgstr "Opcje kolorów"
 
-msgid "[+lineno] file1[:lineno] [file2[:lineno]...]"
-msgstr ""
-
-msgid "file"
-msgstr "pliku"
-
-#, fuzzy
-msgid "file1 file2"
-msgstr "Podgląd pliku"
+msgid "+number"
+msgstr "+numer"
 
 msgid "[this_dir] [other_panel_dir]"
 msgstr "[ten_katalog] [katalog_w_drugim_panelu]"
+
+msgid "Set initial line number for the internal editor"
+msgstr "Ustawia początkowy numer wiersza dla wewnętrznego edytora"
 
 msgid ""
 "\n"
@@ -2489,6 +2485,9 @@ msgstr "%o %f%n„%s”%m"
 #, no-c-format
 msgid "%o %d %f%m"
 msgstr "%o %d %f%m"
+
+msgid "file"
+msgstr "pliku"
 
 msgid "files"
 msgstr "plików"
@@ -4495,9 +4494,3 @@ msgstr "Kontynuować od początku?"
 msgid "Cannot fetch a local copy of /ftp://some.host/editme.txt"
 msgstr ""
 "Nie można pobrać lokalnej kopii /ftp://jakiś.komputer/modyfikuj_mnie.txt"
-
-#~ msgid "+number"
-#~ msgstr "+numer"
-
-#~ msgid "Set initial line number for the internal editor"
-#~ msgstr "Ustawia początkowy numer wiersza dla wewnętrznego edytora"

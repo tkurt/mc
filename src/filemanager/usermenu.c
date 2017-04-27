@@ -893,7 +893,7 @@ expand_format (const WEdit * edit_widget, char c, gboolean do_quote)
                     g_free (tmp);
 
                     if (c_lc == 'u')
-                        do_file_mark (panel, i, 0);
+                        do_file_mark (panel, i, 0, 0);
                 }
             result = g_string_free (block, FALSE);
             goto ret;

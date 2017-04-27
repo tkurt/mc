@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Midnight Commander\n"
 "Report-Msgid-Bugs-To: http://www.midnight-commander.org/\n"
-"POT-Creation-Date: 2017-04-15 09:50+0300\n"
+"POT-Creation-Date: 2017-03-04 18:55+0100\n"
 "PO-Revision-Date: 2017-02-25 09:22+0000\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Greek (http://www.transifex.com/mc/mc/language/el/)\n"
@@ -748,17 +748,13 @@ msgstr ""
 msgid "Color options"
 msgstr "Επιλογές χρωμάτων"
 
-msgid "[+lineno] file1[:lineno] [file2[:lineno]...]"
-msgstr ""
-
-msgid "file"
-msgstr "αρχείο"
-
-#, fuzzy
-msgid "file1 file2"
-msgstr "Προβολή αρχείου"
+msgid "+number"
+msgstr "+αριθμός"
 
 msgid "[this_dir] [other_panel_dir]"
+msgstr ""
+
+msgid "Set initial line number for the internal editor"
 msgstr ""
 
 msgid ""
@@ -2411,6 +2407,9 @@ msgstr "%o %f%n\"%s\"%m"
 #, no-c-format
 msgid "%o %d %f%m"
 msgstr "%o %d %f%m"
+
+msgid "file"
+msgstr "αρχείο"
 
 msgid "files"
 msgstr "αρχεία"
@@ -4346,6 +4345,3 @@ msgstr "Συνέχεια από την αρχή;"
 
 msgid "Cannot fetch a local copy of /ftp://some.host/editme.txt"
 msgstr ""
-
-#~ msgid "+number"
-#~ msgstr "+αριθμός"

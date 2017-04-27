@@ -89,6 +89,8 @@
 
 #include "midnight.h"
 
+#include "selmnt.h"
+
 /*** global variables ****************************************************************************/
 
 /* When the modes are active, left_panel, right_panel and tree_panel */
@@ -179,7 +181,7 @@ listmode_cmd (void)
         return;
 
     g_free (current_panel->user_format);
-    current_panel->list_format = list_user;
+    current_panel->list_type = list_user;
     current_panel->user_format = newmode;
     set_panel_formats (current_panel);
 
@@ -190,7 +192,7 @@ listmode_cmd (void)
 /* --------------------------------------------------------------------------------------------- */
 
 static GList *
-create_panel_menu (void)
+create_panel_menu (gboolean is_left)
 {
     GList *entries = NULL;
 
@@ -200,8 +202,7 @@ create_panel_menu (void)
     entries = g_list_prepend (entries, menu_entry_create (_("&Tree"), CK_PanelTree));
     entries = g_list_prepend (entries, menu_separator_create ());
     entries =
-        g_list_prepend (entries,
-                        menu_entry_create (_("&Listing format..."), CK_SetupListingFormat));
+        g_list_prepend (entries, menu_entry_create (_("&Listing mode..."), CK_PanelListingChange));
     entries = g_list_prepend (entries, menu_entry_create (_("&Sort order..."), CK_Sort));
     entries = g_list_prepend (entries, menu_entry_create (_("&Filter..."), CK_Filter));
 #ifdef HAVE_CHARSET
@@ -222,6 +223,9 @@ create_panel_menu (void)
 #endif
     entries = g_list_prepend (entries, menu_entry_create (_("Paneli&ze"), CK_Panelize));
     entries = g_list_prepend (entries, menu_separator_create ());
+
+    entries = g_list_prepend (entries, menu_entry_create (_("&Mountpoints"), 
+        is_left ? CK_SelectMntLeft : CK_SelectMntRight));
     entries = g_list_prepend (entries, menu_entry_create (_("&Rescan"), CK_Reread));
 
     return g_list_reverse (entries);
@@ -352,14 +356,14 @@ create_options_menu (void)
 static void
 init_menu (void)
 {
-    left_menu = create_menu ("", create_panel_menu (), "[Left and Right Menus]");
+    left_menu = create_menu ("", create_panel_menu (TRUE), "[Left and Right Menus]");
     menubar_add_menu (the_menubar, left_menu);
     menubar_add_menu (the_menubar, create_menu (_("&File"), create_file_menu (), "[File Menu]"));
     menubar_add_menu (the_menubar,
                       create_menu (_("&Command"), create_command_menu (), "[Command Menu]"));
     menubar_add_menu (the_menubar,
                       create_menu (_("&Options"), create_options_menu (), "[Options Menu]"));
-    right_menu = create_menu ("", create_panel_menu (), "[Left and Right Menus]");
+    right_menu = create_menu ("", create_panel_menu (FALSE), "[Left and Right Menus]");
     menubar_add_menu (the_menubar, right_menu);
     update_menu ();
 }
@@ -1113,8 +1117,8 @@ midnight_execute_cmd (Widget * sender, long command)
     case CK_HotListAdd:
         add2hotlist_cmd ();
         break;
-    case CK_SetupListingFormat:
-        setup_listing_format_cmd ();
+    case CK_PanelListingChange:
+        change_listing_cmd ();
         break;
     case CK_ChangeMode:
         chmod_cmd ();
@@ -1353,6 +1357,9 @@ midnight_execute_cmd (Widget * sender, long command)
     case CK_LinkSymbolic:
         link_cmd (LINK_SYMLINK_ABSOLUTE);
         break;
+    case CK_PanelListingSwitch:
+        toggle_listing_cmd ();
+        break;
     case CK_ShowHidden:
         toggle_show_hidden ();
         break;
@@ -1391,59 +1398,17 @@ midnight_execute_cmd (Widget * sender, long command)
     case CK_Cancel:
         /* don't close panels due to SIGINT */
         break;
+    case CK_SelectMntLeft:
+        select_mnt_left ();
+        break;
+    case CK_SelectMntRight:
+        select_mnt_right ();
+        break;
     default:
         res = MSG_NOT_HANDLED;
     }
 
     return res;
-}
-
-/* --------------------------------------------------------------------------------------------- */
-
-/**
- * Whether the command-line should not respond to key events.
- *
- * This is TRUE if a QuickView or TreeView have the focus, as they're going
- * to consume some keys and there's no sense in passing to the command-line
- * just the leftovers.
- */
-static gboolean
-is_cmdline_mute (void)
-{
-    /* When one of panels is other than view_listing,
-       current_panel points to view_listing panel all time independently of
-       it's activity. Thus, we can't use get_current_type() here.
-       current_panel should point to actualy current active panel
-       independently of it's type. */
-    return (current_panel->active == 0
-            && (get_other_type () == view_quick || get_other_type () == view_tree));
-}
-
-/* --------------------------------------------------------------------------------------------- */
-
-/**
- * Handles the Enter key on the command-line.
- *
- * Returns TRUE if non-whitespace was indeed processed.
- */
-static gboolean
-handle_cmdline_enter (void)
-{
-    size_t i;
-
-    for (i = 0; cmdline->buffer[i] != '\0' && whitespace (cmdline->buffer[i]); i++)
-        ;
-
-    if (cmdline->buffer[i] != '\0')
-    {
-        send_message (cmdline, NULL, MSG_KEY, '\n', NULL);
-        return TRUE;
-    }
-
-    input_insert (cmdline, "", FALSE);
-    cmdline->point = 0;
-
-    return FALSE;
 }
 
 /* --------------------------------------------------------------------------------------------- */
@@ -1503,11 +1468,38 @@ midnight_callback (Widget * w, Widget * sender, widget_msg_t msg, int parm, void
         if (widget_get_state (WIDGET (the_menubar), WST_FOCUSED))
             return MSG_NOT_HANDLED;
 
-        if (parm == '\n' && !is_cmdline_mute ())
+        if (parm == KEY_F (11) || parm == KEY_F (12))
         {
-            if (handle_cmdline_enter ())
+            command = keybind_lookup_keymap_command (main_map, parm);
+            if (command != CK_IgnoreKey)
+                return midnight_execute_cmd (NULL, command);
+        }
+
+        if (parm == '\n')
+        {
+            size_t i;
+
+            /* HACK: don't execute command in the command line if Enter was pressed
+               in the quick viewer panel. */
+            /* TODO: currently, when one of panels is other than view_listing,
+               current_panel points to view_listing panel all time independently of
+               it's activity. Thus, we can't use get_current_type() here.
+               current_panel should point to actualy current active panel
+               independently of it's type. */
+            if (current_panel->active == 0 && get_other_type () == view_quick)
+                return MSG_NOT_HANDLED;
+
+            for (i = 0; cmdline->buffer[i] != '\0' && whitespace (cmdline->buffer[i]); i++)
+                ;
+
+            if (cmdline->buffer[i] != '\0')
+            {
+                send_message (cmdline, NULL, MSG_KEY, parm, NULL);
                 return MSG_HANDLED;
-            /* Else: the panel will handle it. */
+            }
+
+            input_insert (cmdline, "", FALSE);
+            cmdline->point = 0;
         }
 
         if ((!mc_global.tty.alternate_plus_minus
@@ -1570,7 +1562,7 @@ midnight_callback (Widget * w, Widget * sender, widget_msg_t msg, int parm, void
             if (command != CK_IgnoreKey)
                 v = midnight_execute_cmd (NULL, command);
 
-            if (v == MSG_NOT_HANDLED && command_prompt && !is_cmdline_mute ())
+            if (v == MSG_NOT_HANDLED && command_prompt)
                 v = send_message (cmdline, NULL, MSG_KEY, parm, NULL);
 
             return v;

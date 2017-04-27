@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Midnight Commander\n"
 "Report-Msgid-Bugs-To: http://www.midnight-commander.org/\n"
-"POT-Creation-Date: 2017-04-15 09:50+0300\n"
+"POT-Creation-Date: 2017-03-04 18:55+0100\n"
 "PO-Revision-Date: 2017-02-25 09:22+0000\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Esperanto (http://www.transifex.com/mc/mc/language/eo/)\n"
@@ -781,18 +781,14 @@ msgstr ""
 msgid "Color options"
 msgstr "Kolora agordo"
 
-msgid "[+lineno] file1[:lineno] [file2[:lineno]...]"
-msgstr ""
-
-msgid "file"
-msgstr "dosieron"
-
-#, fuzzy
-msgid "file1 file2"
-msgstr "Vidi dosieron"
+msgid "+number"
+msgstr "+numero"
 
 msgid "[this_dir] [other_panel_dir]"
 msgstr "[maldekstra_flanko] [dekstra_flanko]"
+
+msgid "Set initial line number for the internal editor"
+msgstr "Agordi komencan lininumeron por la interna tekstoredaktilo"
 
 msgid ""
 "\n"
@@ -2475,6 +2471,9 @@ msgstr "%o %f%n\"%s\"%m"
 #, no-c-format
 msgid "%o %d %f%m"
 msgstr "%o %d %f%m"
+
+msgid "file"
+msgstr "dosieron"
 
 msgid "files"
 msgstr "dosierojn"
@@ -4471,9 +4470,3 @@ msgstr "Ĉu deiri de la komenco?"
 
 msgid "Cannot fetch a local copy of /ftp://some.host/editme.txt"
 msgstr "Ne eblas atingi lokan kopion de /ftp://some.host/editme.txt"
-
-#~ msgid "+number"
-#~ msgstr "+numero"
-
-#~ msgid "Set initial line number for the internal editor"
-#~ msgstr "Agordi komencan lininumeron por la interna tekstoredaktilo"

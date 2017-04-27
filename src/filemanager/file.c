@@ -2304,6 +2304,75 @@ copy_dir_dir (file_op_total_context_t * tctx, file_op_context_t * ctx, const cha
 /* --------------------------------------------------------------------------------------------- */
 /* {{{ Move routines */
 
+/* try to rename directory */
+/* return FILE_RETRY if job is not done (there is a need to copy directory) */
+
+FileProgressStatus
+move_dir_dir_in_place (file_op_total_context_t * tctx, file_op_context_t * ctx,
+                                 const char *s, const char *d)
+{
+    struct stat sbuf, dbuf;
+    FileProgressStatus return_status;
+    gboolean dstat_ok;
+    vfs_path_t *src_vpath, *dst_vpath;
+
+    src_vpath = vfs_path_from_str (s);
+    dst_vpath = vfs_path_from_str (d);
+
+    mc_stat (src_vpath, &sbuf);
+
+    dstat_ok = (mc_stat (dst_vpath, &dbuf) == 0);
+    if (dstat_ok && sbuf.st_dev == dbuf.st_dev && sbuf.st_ino == dbuf.st_ino)
+    {
+        return_status = warn_same_file (_("\"%s\"\nand\n\"%s\"\nare the same directory"), s, d);
+        goto ret_fast;
+    }
+
+    if (dstat_ok && ctx->dive_into_subdirs)
+    {
+        vfs_path_t *tmp;
+
+        tmp = dst_vpath;
+        dst_vpath = vfs_path_append_new (dst_vpath, x_basename (s), NULL);
+        vfs_path_free (tmp);
+    }
+
+    if (mc_stat (dst_vpath, &dbuf) == 0)
+    {
+        return_status = FILE_RETRY;
+        goto ret_fast;
+    }
+
+  retry_rename:
+    if (mc_rename (src_vpath, dst_vpath) == 0)
+    {
+        return_status = FILE_CONT;
+        goto ret;
+    }
+
+    if (errno == EXDEV)
+    {
+       return_status = FILE_RETRY;
+       goto ret_fast;
+    }
+
+    if (!ctx->skip_all)
+    {
+       return_status = files_error (_("Cannot move directory \"%s\" to \"%s\"\n%s"), s, d);
+        if (return_status == FILE_RETRY)
+            goto retry_rename;
+        if (return_status == FILE_SKIPALL)
+            ctx->skip_all = TRUE;
+    }
+
+  ret:
+    erase_list = free_linklist (erase_list);
+  ret_fast:
+    vfs_path_free (src_vpath);
+    vfs_path_free (dst_vpath);
+    return return_status;
+}
+
 FileProgressStatus
 move_dir_dir (file_op_total_context_t * tctx, file_op_context_t * ctx, const char *s, const char *d)
 {
@@ -2918,9 +2987,11 @@ panel_operate (void *source_panel, FileOperation operation, gboolean force_singl
                         break;
 
                     case OP_MOVE:
-                        if (S_ISDIR (src_stat.st_mode))
-                            value =
-                                move_dir_dir (tctx, ctx, vfs_path_as_str (source_with_vpath), dest);
+                        if (S_ISDIR (src_stat.st_mode)) {
+                            value = move_dir_dir_in_place (tctx, ctx, vfs_path_as_str (source_with_vpath), dest);
+                            if (value == FILE_RETRY) 
+                                value = move_dir_dir (tctx, ctx, vfs_path_as_str (source_with_vpath), dest);
+                        }
                         else
                             value =
                                 move_file_file (tctx, ctx, vfs_path_as_str (source_with_vpath),
@@ -3034,8 +3105,11 @@ panel_operate (void *source_panel, FileOperation operation, gboolean force_singl
                             break;
 
                         case OP_MOVE:
-                            if (S_ISDIR (src_stat.st_mode))
-                                value = move_dir_dir (tctx, ctx, source_with_path_str, temp);
+                            if (S_ISDIR (src_stat.st_mode)) {
+                                value = move_dir_dir_in_place (tctx, ctx, source_with_path_str, temp);
+                                if (value == FILE_RETRY)
+                                    value = move_dir_dir (tctx, ctx, source_with_path_str, temp);
+                            }
                             else
                                 value = move_file_file (tctx, ctx, source_with_path_str, temp);
                             break;
@@ -3054,7 +3128,7 @@ panel_operate (void *source_panel, FileOperation operation, gboolean force_singl
                     break;
 
                 if (value == FILE_CONT)
-                    do_file_mark (panel, i, 0);
+                    do_file_mark (panel, i, 0, 0);
 
                 if (verbose && ctx->dialog_type == FILEGUI_DIALOG_MULTI_ITEM)
                 {

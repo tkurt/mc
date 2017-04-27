@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Midnight Commander\n"
 "Report-Msgid-Bugs-To: http://www.midnight-commander.org/\n"
-"POT-Creation-Date: 2017-04-15 09:50+0300\n"
+"POT-Creation-Date: 2017-03-04 18:55+0100\n"
 "PO-Revision-Date: 2017-02-25 09:22+0000\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Serbian (http://www.transifex.com/mc/mc/language/sr/)\n"
@@ -781,18 +781,14 @@ msgstr ""
 msgid "Color options"
 msgstr "Опције боје"
 
-msgid "[+lineno] file1[:lineno] [file2[:lineno]...]"
-msgstr ""
-
-msgid "file"
-msgstr "датотеку"
-
-#, fuzzy
-msgid "file1 file2"
-msgstr "Прегледајте датотеку"
+msgid "+number"
+msgstr "+број"
 
 msgid "[this_dir] [other_panel_dir]"
 msgstr "[овај_дир] [други_дир_панела]"
+
+msgid "Set initial line number for the internal editor"
+msgstr "Поставите број почетног реда за уграђени уређивач"
 
 msgid ""
 "\n"
@@ -2471,6 +2467,9 @@ msgstr "%o %f%n„%s“%m"
 #, no-c-format
 msgid "%o %d %f%m"
 msgstr "%o %d %f%m"
+
+msgid "file"
+msgstr "датотеку"
 
 msgid "files"
 msgstr "датотека"
@@ -4470,9 +4469,3 @@ msgstr "Да наставим са почетка?"
 
 msgid "Cannot fetch a local copy of /ftp://some.host/editme.txt"
 msgstr "Не могу да довучем месни примерак „/ftp://some.host/editme.txt“"
-
-#~ msgid "+number"
-#~ msgstr "+број"
-
-#~ msgid "Set initial line number for the internal editor"
-#~ msgstr "Поставите број почетног реда за уграђени уређивач"

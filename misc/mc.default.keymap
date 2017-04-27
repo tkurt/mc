@@ -12,6 +12,8 @@ MakeDir = f7
 Delete = f8
 Menu = f9
 Quit = f10
+SelectMntLeft = f11
+SelectMntRight = f12
 MenuLastSelected = f19
 QuitQuiet = f20
 Find = alt-question
@@ -23,7 +25,8 @@ Suspend = ctrl-z
 Swap = ctrl-u
 History = alt-h
 # PanelListing =
-# SetupListingFormat =
+PanelListingSwitch = alt-t
+# PanelListingChange =
 ShowHidden = alt-dot
 SplitVertHoriz = alt-comma
 SplitEqual = alt-equal
@@ -79,7 +82,6 @@ PutCurrentLink = r
 PutOtherLink = ctrl-r
 
 [panel]
-CycleListingFormat = alt-t
 Search = ctrl-s; alt-s
 Mark = insert; ctrl-t
 MarkUp = shift-up

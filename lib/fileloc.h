@@ -49,6 +49,9 @@
 #define FISH_APPEND_FILE        "append"
 #define FISH_INFO_FILE          "info"
 
+#define XSMB_PROFILE            "xsmb"
+#define XNET_PROFILE            "xnet"
+
 #define MC_EXTFS_DIR            "extfs.d"
 
 #define MC_BASHRC_FILE          "bashrc"

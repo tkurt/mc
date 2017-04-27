@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: mc 4.8.19-20-g2409b6f\n"
+"Project-Id-Version: mc 4.8.19\n"
 "Report-Msgid-Bugs-To: http://www.midnight-commander.org/\n"
-"POT-Creation-Date: 2017-04-15 09:50+0300\n"
+"POT-Creation-Date: 2017-03-04 18:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -654,7 +654,7 @@ msgstr ""
 #: src/editor/editcmd.c:3440 src/editor/editcmd.c:3469
 #: src/editor/editcmd_dialogs.c:481 src/execute.c:135
 #: src/filemanager/file.c:1677 src/filemanager/panel.c:4464 src/help.c:361
-#: src/main.c:401 src/subshell/common.c:418 src/subshell/common.c:1244
+#: src/main.c:399 src/subshell/common.c:418 src/subshell/common.c:1244
 #: src/viewer/actions_cmd.c:419
 msgid "Warning"
 msgstr ""
@@ -982,51 +982,47 @@ msgstr ""
 msgid "Color options"
 msgstr ""
 
-#: src/args.c:396
-msgid "[+lineno] file1[:lineno] [file2[:lineno]...]"
+#: src/args.c:392 src/args.c:394
+msgid "+number"
 msgstr ""
 
-#: src/args.c:399 src/filemanager/file.c:160
-msgid "file"
-msgstr ""
-
-#: src/args.c:403
-msgid "file1 file2"
-msgstr ""
-
-#: src/args.c:408
+#: src/args.c:393
 msgid "[this_dir] [other_panel_dir]"
 msgstr ""
 
-#: src/args.c:423
+#: src/args.c:396
+msgid "Set initial line number for the internal editor"
+msgstr ""
+
+#: src/args.c:407
 msgid ""
 "\n"
 "Please send any bug reports (including the output of 'mc -V')\n"
 "as tickets at www.midnight-commander.org\n"
 msgstr ""
 
-#: src/args.c:426 src/filemanager/midnight.c:1702 src/textconf.c:141
+#: src/args.c:410 src/filemanager/midnight.c:1702 src/textconf.c:141
 #, c-format
 msgid "GNU Midnight Commander %s\n"
 msgstr ""
 
-#: src/args.c:679 src/filemanager/boxes.c:646
+#: src/args.c:637 src/filemanager/boxes.c:646
 msgid "Main options"
 msgstr ""
 
-#: src/args.c:685 src/args.c:686
+#: src/args.c:643 src/args.c:644
 msgid "Terminal options"
 msgstr ""
 
-#: src/args.c:701
+#: src/args.c:659
 msgid "Arguments parse error!"
 msgstr ""
 
-#: src/args.c:819
+#: src/args.c:797
 msgid "No arguments given to the viewer."
 msgstr ""
 
-#: src/args.c:831
+#: src/args.c:809
 msgid "Two files are required to envoke the diffviewer."
 msgstr ""
 
@@ -3183,6 +3179,10 @@ msgstr ""
 msgid "%o %d %f%m"
 msgstr ""
 
+#: src/filemanager/file.c:160
+msgid "file"
+msgstr ""
+
 #: src/filemanager/file.c:161
 msgid "files"
 msgstr ""
@@ -4742,18 +4742,18 @@ msgid ""
 "key, or click with the mouse to define it. Move around with Tab."
 msgstr ""
 
-#: src/main.c:242
+#: src/main.c:240
 #, c-format
 msgid ""
 "Failed to run:\n"
 "%s\n"
 msgstr ""
 
-#: src/main.c:256
+#: src/main.c:254
 msgid "Home directory path is not absolute"
 msgstr ""
 
-#: src/main.c:497
+#: src/main.c:495
 #, c-format
 msgid ""
 "\n"

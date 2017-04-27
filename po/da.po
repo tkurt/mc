@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Midnight Commander\n"
 "Report-Msgid-Bugs-To: http://www.midnight-commander.org/\n"
-"POT-Creation-Date: 2017-04-15 09:50+0300\n"
+"POT-Creation-Date: 2017-03-04 18:55+0100\n"
 "PO-Revision-Date: 2017-02-25 09:22+0000\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Danish (http://www.transifex.com/mc/mc/language/da/)\n"
@@ -748,18 +748,14 @@ msgstr ""
 msgid "Color options"
 msgstr "Farveindstillinger"
 
-msgid "[+lineno] file1[:lineno] [file2[:lineno]...]"
-msgstr ""
-
-msgid "file"
-msgstr "fil"
-
-#, fuzzy
-msgid "file1 file2"
-msgstr "Vis fil"
+msgid "+number"
+msgstr "+tal"
 
 msgid "[this_dir] [other_panel_dir]"
 msgstr "[denne_mappe] [anden_panel_mappe]"
+
+msgid "Set initial line number for the internal editor"
+msgstr "Angiv opstartslinjenummer for det interne redigeringsprogram"
 
 msgid ""
 "\n"
@@ -2432,6 +2428,9 @@ msgstr ""
 #, no-c-format
 msgid "%o %d %f%m"
 msgstr "%o %d %f%m"
+
+msgid "file"
+msgstr "fil"
 
 msgid "files"
 msgstr "filer"
@@ -4403,9 +4402,3 @@ msgstr "Fortsæt fra begyndelsen?"
 
 msgid "Cannot fetch a local copy of /ftp://some.host/editme.txt"
 msgstr ""
-
-#~ msgid "+number"
-#~ msgstr "+tal"
-
-#~ msgid "Set initial line number for the internal editor"
-#~ msgstr "Angiv opstartslinjenummer for det interne redigeringsprogram"

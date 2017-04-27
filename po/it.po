@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Midnight Commander\n"
 "Report-Msgid-Bugs-To: http://www.midnight-commander.org/\n"
-"POT-Creation-Date: 2017-04-15 09:50+0300\n"
+"POT-Creation-Date: 2017-03-04 18:55+0100\n"
 "PO-Revision-Date: 2016-05-08 19:38+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: Italian (http://www.transifex.com/projects/p/mc/language/"
@@ -790,18 +790,14 @@ msgstr ""
 msgid "Color options"
 msgstr "Opzioni colore"
 
-msgid "[+lineno] file1[:lineno] [file2[:lineno]...]"
-msgstr ""
-
-msgid "file"
-msgstr "file"
-
-#, fuzzy
-msgid "file1 file2"
-msgstr "Mostra file"
+msgid "+number"
+msgstr "+numero"
 
 msgid "[this_dir] [other_panel_dir]"
 msgstr "[questa_dir] [dir_altro_pannello]"
+
+msgid "Set initial line number for the internal editor"
+msgstr "Imposta numero di riga iniziale per l'editor interno"
 
 msgid ""
 "\n"
@@ -2482,6 +2478,9 @@ msgstr "%o %f%n\"%s\"%m"
 #, no-c-format
 msgid "%o %d %f%m"
 msgstr "%o %d %f%m"
+
+msgid "file"
+msgstr "file"
 
 msgid "files"
 msgstr "file"
@@ -4479,12 +4478,6 @@ msgstr "Continuare dall'inizio?"
 
 msgid "Cannot fetch a local copy of /ftp://some.host/editme.txt"
 msgstr "Impossibile ricevere copia locale di /ftp://un.host/modificami.txt"
-
-#~ msgid "+number"
-#~ msgstr "+numero"
-
-#~ msgid "Set initial line number for the internal editor"
-#~ msgstr "Imposta numero di riga iniziale per l'editor interno"
 
 #~ msgid "Cannot parse command for pipe"
 #~ msgstr "Impossibile analizzare il comando per la pipe"

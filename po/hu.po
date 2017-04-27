@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Midnight Commander\n"
 "Report-Msgid-Bugs-To: http://www.midnight-commander.org/\n"
-"POT-Creation-Date: 2017-04-15 09:50+0300\n"
+"POT-Creation-Date: 2017-03-04 18:55+0100\n"
 "PO-Revision-Date: 2017-02-25 09:22+0000\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/mc/mc/language/hu/)\n"
@@ -780,18 +780,14 @@ msgstr ""
 msgid "Color options"
 msgstr "Színbeállítások"
 
-msgid "[+lineno] file1[:lineno] [file2[:lineno]...]"
-msgstr ""
-
-msgid "file"
-msgstr "fájl"
-
-#, fuzzy
-msgid "file1 file2"
-msgstr "Fájl megjelenítése"
+msgid "+number"
+msgstr "+szám"
 
 msgid "[this_dir] [other_panel_dir]"
 msgstr "[aktuális_könyvtár] [másik_könyvtár]"
+
+msgid "Set initial line number for the internal editor"
+msgstr "A kezdősor számának megadása a belső szerkesztő számára."
 
 msgid ""
 "\n"
@@ -2470,6 +2466,9 @@ msgstr "%o %f%n\"%s\"%m"
 #, no-c-format
 msgid "%o %d %f%m"
 msgstr "%d kijelölt %f %o%m"
+
+msgid "file"
+msgstr "fájl"
 
 msgid "files"
 msgstr "fájl"
@@ -4466,9 +4465,3 @@ msgstr "Folytatás az elejéről?"
 
 msgid "Cannot fetch a local copy of /ftp://some.host/editme.txt"
 msgstr "Nem sikerült behozni /ftp://some.host/editme.txt helyi másolatát"
-
-#~ msgid "+number"
-#~ msgstr "+szám"
-
-#~ msgid "Set initial line number for the internal editor"
-#~ msgstr "A kezdősor számának megadása a belső szerkesztő számára."

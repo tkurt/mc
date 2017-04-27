@@ -790,7 +790,7 @@ apply_advanced_chowns (struct stat *sf)
                        (ch_flags[10] == '+') ? sf->st_gid : (gid_t) (-1)) == -1)
         message (D_ERROR, MSG_ERROR, _("Cannot chown \"%s\"\n%s"),
                  lc_fname, unix_error_string (errno));
-    do_file_mark (current_panel, current_file, 0);
+    do_file_mark (current_panel, current_file, 0, 0);
     vfs_path_free (vpath);
 
     do
@@ -815,7 +815,7 @@ apply_advanced_chowns (struct stat *sf)
             message (D_ERROR, MSG_ERROR, _("Cannot chown \"%s\"\n%s"),
                      lc_fname, unix_error_string (errno));
 
-        do_file_mark (current_panel, current_file, 0);
+        do_file_mark (current_panel, current_file, 0, 0);
         vfs_path_free (vpath);
     }
     while (current_panel->marked != 0);
@@ -897,7 +897,7 @@ chown_advanced_cmd (void)
 
         if (current_panel->marked && result != B_CANCEL)
         {
-            do_file_mark (current_panel, current_file, 0);
+            do_file_mark (current_panel, current_file, 0, 0);
             need_update = TRUE;
         }
         dlg_destroy (ch_dlg);

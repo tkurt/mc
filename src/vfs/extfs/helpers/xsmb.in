@@ -1,0 +1,38 @@
+#!/bin/sh
+
+xsmb_fs_list ()
+{
+ unset RANGE USER SERVICE DIR DATE PREFIX
+ . $1
+
+ if [ "$RANGE" = "" ]; then exit 1; fi;
+ 
+ export LC_TIME=C
+ PREFIX="dr-xr-xr-x 1 `id -un` `id -gn` 1024 `date "+%h %d %H:%M"`"
+
+ A=""
+ B=""
+
+ if [ "$USER" != "" ]; then
+   A="$USER@"
+   if [ "$SERVICE" != "" ]; then
+    if [ "$DIR" != "" ]; then
+     B="/$SERVICE/$DIR"
+    fi 
+   fi
+ fi
+
+ nbtscan $RANGE 2>/dev/null | grep -e '^[1-9]' | \
+ @AWK@ -v prefix="$PREFIX" -v a="$A" -v b="$B" '{ print prefix " " $2 "/smb:/" a $2}' 
+
+}
+
+
+cmd="$1"
+shift
+
+case "$cmd" in
+  list) xsmb_fs_list "$@" ;;
+  *) exit 1 ;;
+esac
+exit 0

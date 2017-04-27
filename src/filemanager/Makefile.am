@@ -25,7 +25,8 @@ libmcfilemanager_la_SOURCES = \
 	panel.c panel.h \
 	tree.c tree.h \
 	treestore.c treestore.h \
-	usermenu.c usermenu.h
+	usermenu.c usermenu.h \
+	selmnt.c selmnt.h
 
 # Unmaintained, unsupported, etc
 #	listmode.c listmode.h

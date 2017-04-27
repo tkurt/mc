@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Midnight Commander\n"
 "Report-Msgid-Bugs-To: http://www.midnight-commander.org/\n"
-"POT-Creation-Date: 2017-04-15 09:50+0300\n"
+"POT-Creation-Date: 2017-03-04 18:55+0100\n"
 "PO-Revision-Date: 2017-02-25 09:22+0000\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Estonian (http://www.transifex.com/mc/mc/language/et/)\n"
@@ -785,18 +785,14 @@ msgstr ""
 msgid "Color options"
 msgstr "Värvi suvandid"
 
-msgid "[+lineno] file1[:lineno] [file2[:lineno]...]"
-msgstr ""
-
-msgid "file"
-msgstr "fail"
-
-#, fuzzy
-msgid "file1 file2"
-msgstr "Vaata faili"
+msgid "+number"
+msgstr "+number"
 
 msgid "[this_dir] [other_panel_dir]"
 msgstr "[this_dir] [other_panel_dir]"
+
+msgid "Set initial line number for the internal editor"
+msgstr "Määra sisseehitatud toimeti esialgne reanumber"
 
 msgid ""
 "\n"
@@ -2473,6 +2469,9 @@ msgstr "%o %f%n\"%s\"%m"
 #, no-c-format
 msgid "%o %d %f%m"
 msgstr "%o %d %f%m"
+
+msgid "file"
+msgstr "fail"
 
 msgid "files"
 msgstr "failid"
@@ -4468,9 +4467,3 @@ msgstr "Kas jätkata algusest?"
 
 msgid "Cannot fetch a local copy of /ftp://some.host/editme.txt"
 msgstr "Kohaliku koopia hankimine failist /ftp://some.host/editme.txt nurjus"
-
-#~ msgid "+number"
-#~ msgstr "+number"
-
-#~ msgid "Set initial line number for the internal editor"
-#~ msgstr "Määra sisseehitatud toimeti esialgne reanumber"

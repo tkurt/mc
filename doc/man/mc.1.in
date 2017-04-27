@@ -513,9 +513,9 @@ respectively.
 .TP
 .B Alt\-t
 toggle the current display listing to show the next display listing
-format.
+mode.
 With this it is possible to quickly switch to brief listing, long
-listing, user defined listing format, and back to the default.
+listing, user defined listing mode, and back to the default.
 .TP
 .B C\-\\\\ (control\-backslash)
 show the
@@ -815,10 +815,10 @@ when the horizontal panel split is chosen from the
 Layout
 .\"Layout"
 options dialog).
-.\"NODE "    Listing Format..."
-.SH "    Listing Format..."
+.\"NODE "    Listing Mode..."
+.SH "    Listing Mode..."
 The listing mode view is used to display a listing of files, there are
-four different listing formats available:
+four different listing modes available:
 .BR Full ,
 .BR Brief ,
 .B Long
@@ -2118,7 +2118,7 @@ and
 .I mode
 .\"LINK2"
 display fields
-.\"Listing Format..."
+.\"Listing Mode..."
 which apply to the user running Midnight Commander are highlighted with
 the color defined by the
 .I selected
@@ -4287,7 +4287,7 @@ by the
 environment variable. If it's set, its value is used instead of
 %prefix%/share/mc in the paths below.
 .PP
-.I %prefix%/share/mc/help/mc.hlp
+.I %prefix%/share/mc/mc.hlp
 .IP
 The help file for the program.
 .PP
@@ -4319,7 +4319,7 @@ are loaded from mc.lib.
 User's own setup. If this file is present then the setup is loaded
 from here instead of the system\-wide startup file.
 .PP
-.I %prefix%/share/mc/hints/mc.hint
+.I %prefix%/share/mc/mc.hint
 .IP
 This file contains the hints displayed by the program.
 .PP

@@ -679,7 +679,7 @@ regex/\.(rexx?|cmd)$
 
 # Disk images for Commodore computers (VIC20, C64, C128)
 shell/i/.d64
-	Open=%cd %p/uc1541://
+	Open=%cd %p/uc1541:/
 	View=%view{ascii} c1541 %f -list
 	Extract=c1541 %f -extract
 
@@ -708,35 +708,35 @@ shell/i/.torrent
 
 # ace
 shell/i/.ace
-	Open=%cd %p/uace://
+	Open=%cd %p/uace:/
 	View=%view{ascii} @EXTHELPERSDIR@/archive.sh view ace
 	Extract=unace x %f
 
 # arc
 shell/i/.arc
-	Open=%cd %p/uarc://
+	Open=%cd %p/uarc:/
 	View=%view{ascii} @EXTHELPERSDIR@/archive.sh view arc
 	Extract=arc x %f '*'
 	Extract (with flags)=I=%{Enter any Arc flags:}; if test -n "$I"; then arc x $I %f; fi
 
 # zip
 shell/i/.zip
-	Open=%cd %p/uzip://
+	Open=%cd %p/uzip:/
 	View=%view{ascii} @EXTHELPERSDIR@/archive.sh view zip
 
 # zip
 type/i/^zip\ archive
-	Open=%cd %p/uzip://
+	Open=%cd %p/uzip:/
 	View=%view{ascii} @EXTHELPERSDIR@/archive.sh view zip
 
 # jar(zip)
 type/i/^Java\ (Jar\ file|archive)\ data\ \((zip|JAR)\)
-	Open=%cd %p/uzip://
+	Open=%cd %p/uzip:/
 	View=%view{ascii} @EXTHELPERSDIR@/archive.sh view zip
 
 # zoo
 shell/i/.zoo
-	Open=%cd %p/uzoo://
+	Open=%cd %p/uzoo:/
 	View=%view{ascii} @EXTHELPERSDIR@/archive.sh view zoo
 
 # gzip
@@ -793,6 +793,14 @@ regex/\.xz$
 # Parity Archive
 type/^Parity\ Archive\ Volume\ Set
 	Open=@EXTHELPERSDIR@/archive.sh open par2
+
+# xsmb
+regex/(^xsmb|\.xsmb)$
+       Open=%cd %p/xsmb:/
+
+# xnet
+regex/(^xnet|\.xnet)$
+        Open=%cd %p/xnet:/
 
 ### Default ###
 

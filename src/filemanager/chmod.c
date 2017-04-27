@@ -405,7 +405,7 @@ do_chmod (struct stat *sf)
                  current_panel->dir.list[c_file].fname, unix_error_string (errno));
 
     vfs_path_free (vpath);
-    do_file_mark (current_panel, c_file, 0);
+    do_file_mark (current_panel, c_file, 0, 0);
 }
 
 /* --------------------------------------------------------------------------------------------- */
@@ -540,7 +540,7 @@ chmod_cmd (void)
 
         if (current_panel->marked != 0 && result != B_CANCEL)
         {
-            do_file_mark (current_panel, c_file, 0);
+            do_file_mark (current_panel, c_file, 0, 0);
             need_update = TRUE;
         }
 

@@ -60,6 +60,7 @@
 #include "filemanager/panelize.h"       /* load/save/done panelize */
 #include "filemanager/layout.h"
 #include "filemanager/cmd.h"
+#include "filemanager/selmnt.h"
 
 #include "args.h"
 #include "execute.h"            /* pause_after_run */
@@ -135,6 +136,7 @@ panels_options_t panels_options = {
     .fast_reload = FALSE,
     .fast_reload_msg_shown = FALSE,
     .mark_moves_down = TRUE,
+    .auto_dirsizes = FALSE,
     .reverse_files_only = TRUE,
     .auto_save_setup = FALSE,
     .navigate_with_arrows = FALSE,
@@ -214,6 +216,8 @@ struct macro_action_t record_macro_buf[MAX_MACRO_LENGTH];
 GArray *macros_list;
 #endif /* USE_INTERNAL_EDIT */
 
+int selmnt_with_hotlist = FALSE;
+
 /*** file scope macro definitions ****************************************************************/
 
 /* In order to use everywhere the same setup for the locale we use defines */
@@ -231,8 +235,8 @@ static char *panels_profile_name = NULL;        /* ${XDG_CACHE_HOME}/mc/panels.i
 static const struct
 {
     const char *key;
-    int  list_format;
-} list_formats [] = {
+    int  list_type;
+} list_types [] = {
     { "full",  list_full  },
     { "brief", list_brief },
     { "long",  list_long  },
@@ -352,6 +356,7 @@ static const struct
     { "mcview_remember_file_position", &mcview_remember_file_position },
     { "auto_fill_mkdir_name", &auto_fill_mkdir_name },
     { "copymove_persistent_attr", &copymove_persistent_attr },
+    { "selmnt_with_hotlist", &selmnt_with_hotlist },
     { NULL, NULL }
 };
 
@@ -413,6 +418,7 @@ static const struct
     { "fast_reload", &panels_options.fast_reload },
     { "fast_reload_msg_shown", &panels_options.fast_reload_msg_shown },
     { "mark_moves_down", &panels_options.mark_moves_down },
+    { "auto_dirsizes", &panels_options.auto_dirsizes },
     { "reverse_files_only", &panels_options.reverse_files_only },
     { "auto_save_setup_panels", &panels_options.auto_save_setup },
     { "navigate_with_arrows", &panels_options.navigate_with_arrows },
@@ -1229,6 +1235,9 @@ save_setup (gboolean save_options, gboolean save_panel_options)
         mc_config_set_string (mc_global.main_config, CONFIG_MISC_SECTION, "clipboard_paste",
                               clipboard_paste_path);
 
+        mc_config_set_string (mc_global.main_config, CONFIG_MISC_SECTION, "selmnt_filter",
+                              selmnt_filter);
+
         tmp_profile = mc_config_get_full_path (MC_CONFIG_FILE);
         ret = mc_config_save_to_file (mc_global.main_config, tmp_profile, NULL);
         g_free (tmp_profile);
@@ -1450,6 +1459,23 @@ free_keymap_defs (void)
 
 /* --------------------------------------------------------------------------------------------- */
 
+char *
+load_selmnt_filter (void)
+{
+    char *buffer;
+
+    buffer =
+        mc_config_get_string (mc_global.main_config, CONFIG_MISC_SECTION, "selmnt_filter", "::");
+
+    if ((buffer != NULL) && (buffer[0] != '\0'))
+        return buffer;
+
+    g_free (buffer);
+    return NULL;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
 void
 panel_load_setup (WPanel * panel, const char *section)
 {
@@ -1471,18 +1497,13 @@ panel_load_setup (WPanel * panel, const char *section)
 
     g_free (buffer);
 
-    /* Load the listing format */
-    buffer = mc_config_get_string (mc_global.panels_config, section, "list_format", NULL);
-    if (buffer == NULL)
-    {
-        /* fallback to old option */
-        buffer = mc_config_get_string (mc_global.panels_config, section, "list_mode", "full");
-    }
-    panel->list_format = list_full;
-    for (i = 0; list_formats[i].key != NULL; i++)
-        if (g_ascii_strcasecmp (list_formats[i].key, buffer) == 0)
+    /* Load the listing mode */
+    buffer = mc_config_get_string (mc_global.panels_config, section, "list_mode", "full");
+    panel->list_type = list_full;
+    for (i = 0; list_types[i].key != NULL; i++)
+        if (g_ascii_strcasecmp (list_types[i].key, buffer) == 0)
         {
-            panel->list_format = list_formats[i].list_format;
+            panel->list_type = list_types[i].list_type;
             break;
         }
     g_free (buffer);
@@ -1494,7 +1515,7 @@ panel_load_setup (WPanel * panel, const char *section)
     panel->user_format =
         mc_config_get_string (mc_global.panels_config, section, "user_format", DEFAULT_USER_FORMAT);
 
-    for (i = 0; i < LIST_FORMATS; i++)
+    for (i = 0; i < LIST_TYPES; i++)
     {
         g_free (panel->user_status_format[i]);
         g_snprintf (buffer2, sizeof (buffer2), "user_status%lld", (long long) i);
@@ -1521,11 +1542,10 @@ panel_save_setup (WPanel * panel, const char *section)
 
     mc_config_set_string (mc_global.panels_config, section, "sort_order", panel->sort_field->id);
 
-    for (i = 0; list_formats[i].key != NULL; i++)
-        if (list_formats[i].list_format == (int) panel->list_format)
+    for (i = 0; list_types[i].key != NULL; i++)
+        if (list_types[i].list_type == (int) panel->list_type)
         {
-            mc_config_set_string (mc_global.panels_config, section, "list_format",
-                                  list_formats[i].key);
+            mc_config_set_string (mc_global.panels_config, section, "list_mode", list_types[i].key);
             break;
         }
 
@@ -1533,7 +1553,7 @@ panel_save_setup (WPanel * panel, const char *section)
 
     mc_config_set_string (mc_global.panels_config, section, "user_format", panel->user_format);
 
-    for (i = 0; i < LIST_FORMATS; i++)
+    for (i = 0; i < LIST_TYPES; i++)
     {
         g_snprintf (buffer, sizeof (buffer), "user_status%lld", (long long) i);
         mc_config_set_string (mc_global.panels_config, section, buffer,

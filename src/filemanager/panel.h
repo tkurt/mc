@@ -21,7 +21,7 @@
 #define selection(p) (&(p->dir.list[p->selected]))
 #define DEFAULT_USER_FORMAT "half type name | size | perm"
 
-#define LIST_FORMATS 4
+#define LIST_TYPES 4
 
 #define UP_KEEPSEL ((char *) -1)
 
@@ -33,7 +33,7 @@ typedef enum
     list_brief,                 /* Name */
     list_long,                  /* Like ls -l */
     list_user                   /* User defined */
-} list_format_t;
+} list_type_t;
 
 typedef enum
 {
@@ -93,7 +93,7 @@ typedef struct
     Widget widget;
     dir_list dir;               /* Directory contents */
 
-    list_format_t list_format;  /* listing type */
+    list_type_t list_type;      /* listing type */
     int active;                 /* If panel is currently selected */
     vfs_path_t *cwd_vpath;      /* Current Working Directory */
     vfs_path_t *lwd_vpath;      /* Last Working Directory */
@@ -119,7 +119,7 @@ typedef struct
 
     gboolean user_mini_status;  /* Is user_status_format used */
     char *user_format;          /* User format */
-    char *user_status_format[LIST_FORMATS];     /* User format for status line */
+    char *user_status_format[LIST_TYPES];       /* User format for status line */
 
     struct format_e *format;    /* Display format */
     struct format_e *status_format;     /* Mini status format */
@@ -174,7 +174,7 @@ void select_item (WPanel * panel);
 
 void recalculate_panel_summary (WPanel * panel);
 void file_mark (WPanel * panel, int idx, int val);
-void do_file_mark (WPanel * panel, int idx, int val);
+void do_file_mark (WPanel * panel, int idx, int val, int mode);
 
 gboolean do_panel_cd (WPanel * panel, const vfs_path_t * new_dir_vpath, enum cd_enum cd_type);
 

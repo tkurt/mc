@@ -115,6 +115,7 @@ static const global_keymap_ini_t default_main_keymap[] = {
     /* Panel refresh */
     {"Reread", "ctrl-r"},
     /* Switch listing between long, user defined and full formats */
+    {"PanelListingSwitch", "alt-t"},
     /* Swap panels */
     {"Swap", "ctrl-u"},
     /* Resize panels */
@@ -167,9 +168,10 @@ static const global_keymap_ini_t default_main_x_keymap[] = {
 
 /* panel */
 static const global_keymap_ini_t default_panel_keymap[] = {
-    {"CycleListingFormat", "alt-t"},
     {"PanelOtherCd", "alt-o"},
     {"PanelOtherCdLink", "alt-l"},
+    {"SelectMntLeft", "f11"},
+    {"SelectMntRight", "f12"},
     {"CopySingle", "f15"},
     {"DeleteSingle", "f18"},
     {"Enter", "enter"},

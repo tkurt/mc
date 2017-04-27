@@ -322,31 +322,6 @@ me_remote (char const *fs_name, char const *fs_type)
 
 /*** file scope type declarations ****************************************************************/
 
-/* A mount table entry. */
-struct mount_entry
-{
-    char *me_devname;           /* Device node name, including "/dev/". */
-    char *me_mountdir;          /* Mount point directory name. */
-    char *me_mntroot;           /* Directory on filesystem of device used
-                                   as root for the (bind) mount. */
-    char *me_type;              /* "nfs", "4.2", etc. */
-    dev_t me_dev;               /* Device number of me_mountdir. */
-    unsigned int me_dummy:1;    /* Nonzero for dummy file systems. */
-    unsigned int me_remote:1;   /* Nonzero for remote fileystems. */
-    unsigned int me_type_malloced:1;    /* Nonzero if me_type was malloced. */
-};
-
-struct fs_usage
-{
-    uintmax_t fsu_blocksize;    /* Size of a block.  */
-    uintmax_t fsu_blocks;       /* Total blocks. */
-    uintmax_t fsu_bfree;        /* Free blocks available to superuser. */
-    uintmax_t fsu_bavail;       /* Free blocks available to non-superuser. */
-    int fsu_bavail_top_bit_set; /* 1 if fsu_bavail represents a value < 0.  */
-    uintmax_t fsu_files;        /* Total file nodes. */
-    uintmax_t fsu_ffree;        /* Free file nodes. */
-};
-
 /*** file scope variables ************************************************************************/
 
 #ifdef HAVE_INFOMOUNT_LIST
@@ -645,7 +620,7 @@ unescape_tab (char *str)
 /* Return a list of the currently mounted file systems, or NULL on error.
    Add each entry to the tail of the list so that they stay in order. */
 
-static GSList *
+GSList *
 read_file_system_list (void)
 {
     GSList *mount_list = NULL;
@@ -1314,7 +1289,7 @@ read_file_system_list (void)
  ** structure. See my_statfs() below for the "other side" of this hack.
  */
 
-static GSList *
+GSList *
 read_file_system_list (void)
 {
     struct _disk_entry de;
@@ -1484,7 +1459,7 @@ full_read (int fd, void *buf, size_t count)
    Return 0 if successful, -1 if not.  When returning -1, ensure that
    ERRNO is either a system error value, or zero if DISK is NULL
    on a system that requires a non-NULL value.  */
-static int
+int
 get_fs_usage (char const *file, char const *disk, struct fs_usage *fsp)
 {
 #ifdef STAT_STATVFS             /* POSIX, except pre-2.6.36 glibc/Linux */

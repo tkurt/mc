@@ -304,7 +304,7 @@ do_chown (uid_t u, gid_t g)
                  current_panel->dir.list[current_file].fname, unix_error_string (errno));
 
     vfs_path_free (vpath);
-    do_file_mark (current_panel, current_file, 0);
+    do_file_mark (current_panel, current_file, 0, 0);
 }
 
 /* --------------------------------------------------------------------------------------------- */
@@ -445,7 +445,7 @@ chown_cmd (void)
 
         if (current_panel->marked && ch_dlg->ret_value != B_CANCEL)
         {
-            do_file_mark (current_panel, current_file, 0);
+            do_file_mark (current_panel, current_file, 0, 0);
             need_update = 1;
         }
 

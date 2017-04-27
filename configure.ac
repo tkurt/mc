@@ -569,6 +569,8 @@ src/vfs/extfs/helpers/ulib
 src/vfs/extfs/helpers/urar
 src/vfs/extfs/helpers/uzip
 src/vfs/extfs/helpers/uzoo
+src/vfs/extfs/helpers/xnet
+src/vfs/extfs/helpers/xsmb
 
 src/vfs/fish/Makefile
 src/vfs/fish/helpers/Makefile

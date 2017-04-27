@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Midnight Commander\n"
 "Report-Msgid-Bugs-To: http://www.midnight-commander.org/\n"
-"POT-Creation-Date: 2017-04-15 09:50+0300\n"
+"POT-Creation-Date: 2017-03-04 18:55+0100\n"
 "PO-Revision-Date: 2017-02-25 09:22+0000\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Slovak (http://www.transifex.com/mc/mc/language/sk/)\n"
@@ -787,18 +787,14 @@ msgstr ""
 msgid "Color options"
 msgstr "Možnosti farieb"
 
-msgid "[+lineno] file1[:lineno] [file2[:lineno]...]"
-msgstr ""
-
-msgid "file"
-msgstr "súbor"
-
-#, fuzzy
-msgid "file1 file2"
-msgstr "Zobraziť súbor"
+msgid "+number"
+msgstr "+číslo"
 
 msgid "[this_dir] [other_panel_dir]"
 msgstr "[tento_adresár] [adresár_v_druhom_paneli]"
+
+msgid "Set initial line number for the internal editor"
+msgstr "Nastaviť počiatočné číslo riadka pre interný editor"
 
 msgid ""
 "\n"
@@ -2480,6 +2476,9 @@ msgstr "%o %f%n\"%s\"%m"
 #, no-c-format
 msgid "%o %d %f%m"
 msgstr "%o %d %f%m"
+
+msgid "file"
+msgstr "súbor"
 
 msgid "files"
 msgstr "súbory"
@@ -4480,9 +4479,3 @@ msgstr "Pokračovať od začiatku?"
 
 msgid "Cannot fetch a local copy of /ftp://some.host/editme.txt"
 msgstr "Nemožno stiahnuť lokálnu kópiu /ftp://some.host/editme.txt"
-
-#~ msgid "+number"
-#~ msgstr "+číslo"
-
-#~ msgid "Set initial line number for the internal editor"
-#~ msgstr "Nastaviť počiatočné číslo riadka pre interný editor"

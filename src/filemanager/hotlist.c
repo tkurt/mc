@@ -209,7 +209,7 @@ static struct hotlist *current_group;
 
 static GString *tkn_buf = NULL;
 
-static char *hotlist_file_name;
+//static char *hotlist_file_name;
 static FILE *hotlist_file;
 static time_t hotlist_file_mtime;
 

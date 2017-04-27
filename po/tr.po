@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Midnight Commander\n"
 "Report-Msgid-Bugs-To: http://www.midnight-commander.org/\n"
-"POT-Creation-Date: 2017-04-15 09:50+0300\n"
+"POT-Creation-Date: 2017-03-04 18:55+0100\n"
 "PO-Revision-Date: 2017-02-25 09:22+0000\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Turkish (http://www.transifex.com/mc/mc/language/tr/)\n"
@@ -785,21 +785,14 @@ msgstr ""
 msgid "Color options"
 msgstr "Renk seçenekleri"
 
-msgid "[+lineno] file1[:lineno] [file2[:lineno]...]"
-msgstr ""
-
-msgid "file"
-msgstr "dosya:"
-
-#, fuzzy
-msgid "file1 file2"
-msgstr ""
-"GNU Midnight Commander zaten\n"
-"bu terminalde �al���yor.\n"
-"Altkabuk deste�i kapat�lacak."
+msgid "+number"
+msgstr "+sayı"
 
 msgid "[this_dir] [other_panel_dir]"
 msgstr "[seçenekler] [bu_dizin] [diğer_panel_dizini]"
+
+msgid "Set initial line number for the internal editor"
+msgstr "İç düzenleyici için başlangıç satır numarasını ayarla"
 
 msgid ""
 "\n"
@@ -2487,6 +2480,9 @@ msgstr "%o %f%n\"%s\"%m"
 #, no-c-format
 msgid "%o %d %f%m"
 msgstr "%o %d %f%m"
+
+msgid "file"
+msgstr "dosya:"
 
 msgid "files"
 msgstr "dosya"
@@ -4484,9 +4480,3 @@ msgstr "Başından devam edilsin mi?"
 
 msgid "Cannot fetch a local copy of /ftp://some.host/editme.txt"
 msgstr " /ftp://some.host/editme.txt 'in yerel kopyası alınamadı"
-
-#~ msgid "+number"
-#~ msgstr "+sayı"
-
-#~ msgid "Set initial line number for the internal editor"
-#~ msgstr "İç düzenleyici için başlangıç satır numarasını ayarla"

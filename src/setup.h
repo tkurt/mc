@@ -43,6 +43,7 @@ typedef struct
     gboolean fast_reload;       /* If TRUE then use stat() on the cwd to determine directory changes */
     gboolean fast_reload_msg_shown;     /* Have we shown the fast-reload warning in the past? */
     gboolean mark_moves_down;   /* If TRUE, marking a files moves the cursor down */
+    gboolean auto_dirsizes;             /* If TRUE - count directories size when mark it */
     gboolean reverse_files_only;        /* If TRUE, only selection of files is inverted */
     gboolean auto_save_setup;
     gboolean navigate_with_arrows;      /* If TRUE: l&r arrows are used to chdir if the input line is empty */
@@ -154,6 +155,9 @@ char *load_anon_passwd (void);
 
 void load_keymap_defs (gboolean load_from_file);
 void free_keymap_defs (void);
+
+char *load_selmnt_filter (void);
+extern int selmnt_with_hotlist;
 
 void panel_load_setup (WPanel * panel, const char *section);
 void panel_save_setup (WPanel * panel, const char *section);

@@ -132,18 +132,19 @@ do_view_cmd (gboolean normal)
     {
         vfs_path_t *fname_vpath;
 
-        if (confirm_view_dir && (current_panel->marked || current_panel->dirs_marked))
+        if (current_panel->dir.list[current_panel->selected].f.marked)
         {
-            if (query_dialog
-                (_("Confirmation"), _("Files tagged, want to cd?"), D_NORMAL, 2,
-                 _("&Yes"), _("&No")) != 0)
-            {
-                return;
-            }
+            dirsizes_cmd();
+        }
+        else
+        {
+            int old_mark_moves_down = panels_options.mark_moves_down;
+
+            panels_options.mark_moves_down = 0;
+            single_dirsize_cmd ();
+            panels_options.mark_moves_down = old_mark_moves_down;
         }
         fname_vpath = vfs_path_from_str (selection (current_panel)->fname);
-        if (!do_cd (fname_vpath, cd_exact))
-            message (D_ERROR, MSG_ERROR, _("Cannot change directory"));
         vfs_path_free (fname_vpath);
     }
     else
@@ -174,15 +175,12 @@ static void
 set_panel_filter_to (WPanel * p, char *allocated_filter_string)
 {
     g_free (p->filter);
-    p->filter = NULL;
+    p->filter = 0;
 
-    /* Three ways to clear filter: NULL, "", "*" */
-    if (allocated_filter_string == NULL ||
-        allocated_filter_string[0] == '\0' ||
-        (allocated_filter_string[0] == '*' && allocated_filter_string[1] == '\0'))
-        g_free (allocated_filter_string);
-    else
+    if (!(allocated_filter_string[0] == '*' && allocated_filter_string[1] == 0))
         p->filter = allocated_filter_string;
+    else
+        g_free (allocated_filter_string);
     reread_cmd ();
 }
 
@@ -299,7 +297,7 @@ compare_dir (WPanel * panel, WPanel * other, enum CompareMode mode)
         }
         if (j >= other->dir.len)
             /* Not found -> mark */
-            do_file_mark (panel, i, 1);
+            do_file_mark (panel, i, 1, 0);
         else
         {
             /* Found */
@@ -315,7 +313,7 @@ compare_dir (WPanel * panel, WPanel * other, enum CompareMode mode)
             /* Newer version with different size is marked */
             if (source->st.st_size != target->st.st_size)
             {
-                do_file_mark (panel, i, 1);
+                do_file_mark (panel, i, 1, 0);
                 continue;
 
             }
@@ -328,7 +326,7 @@ compare_dir (WPanel * panel, WPanel * other, enum CompareMode mode)
                 /* Mark newer version, don't mark version with the same date */
                 if (source->st.st_mtime > target->st.st_mtime)
                 {
-                    do_file_mark (panel, i, 1);
+                    do_file_mark (panel, i, 1, 0);
                 }
                 continue;
             }
@@ -340,7 +338,7 @@ compare_dir (WPanel * panel, WPanel * other, enum CompareMode mode)
                 src_name = vfs_path_append_new (panel->cwd_vpath, source->fname, (char *) NULL);
                 dst_name = vfs_path_append_new (other->cwd_vpath, target->fname, (char *) NULL);
                 if (compare_files (src_name, dst_name, source->st.st_size))
-                    do_file_mark (panel, i, 1);
+                    do_file_mark (panel, i, 1, 0);
                 vfs_path_free (src_name);
                 vfs_path_free (dst_name);
             }
@@ -475,23 +473,23 @@ nice_cd (const char *text, const char *xtext, const char *help,
 /* --------------------------------------------------------------------------------------------- */
 
 static void
-configure_panel_listing (WPanel * p, int list_format, int brief_cols, gboolean use_msformat,
+configure_panel_listing (WPanel * p, int list_type, int brief_cols, gboolean use_msformat,
                          char **user, char **status)
 {
     p->user_mini_status = use_msformat;
-    p->list_format = list_format;
+    p->list_type = list_type;
 
-    if (list_format == list_brief)
+    if (list_type == list_brief)
         p->brief_cols = brief_cols;
 
-    if (list_format == list_user || use_msformat)
+    if (list_type == list_user || use_msformat)
     {
         g_free (p->user_format);
         p->user_format = *user;
         *user = NULL;
 
-        g_free (p->user_status_format[list_format]);
-        p->user_status_format[list_format] = *status;
+        g_free (p->user_status_format[list_type]);
+        p->user_status_format[list_type] = *status;
         *status = NULL;
 
         set_panel_formats (p);
@@ -503,11 +501,43 @@ configure_panel_listing (WPanel * p, int list_format, int brief_cols, gboolean u
 
 /* --------------------------------------------------------------------------------------------- */
 
-static void
+void
 switch_to_listing (int panel_index)
 {
     if (get_display_type (panel_index) != view_listing)
         set_display_type (panel_index, view_listing);
+    else
+    {
+        WPanel *p;
+
+        p = PANEL (get_panel_widget (panel_index));
+        if (p->is_panelized)
+        {
+            p->is_panelized = FALSE;
+            panel_reload (p);
+        }
+    }
+}
+
+/* --------------------------------------------------------------------------------------------- */
+/** Handle the tree internal listing modes switching */
+
+static gboolean
+set_basic_panel_listing_to (int panel_index, int listing_mode)
+{
+    WPanel *p;
+    gboolean ok;
+
+    p = PANEL (get_panel_widget (panel_index));
+    switch_to_listing (panel_index);
+    p->list_type = listing_mode;
+
+    ok = set_panel_formats (p) == 0;
+
+    if (ok)
+        do_refresh ();
+
+    return ok;
 }
 
 /* --------------------------------------------------------------------------------------------- */
@@ -1554,22 +1584,15 @@ quick_cmd_no_menu (void)
 void
 listing_cmd (void)
 {
-    WPanel *p;
-
     switch_to_listing (MENU_PANEL_IDX);
-
-    p = PANEL (get_panel_widget (MENU_PANEL_IDX));
-
-    p->is_panelized = FALSE;
-    set_panel_filter_to (p, NULL);      /* including panel reload */
 }
 
 /* --------------------------------------------------------------------------------------------- */
 
 void
-setup_listing_format_cmd (void)
+change_listing_cmd (void)
 {
-    int list_format;
+    int list_type;
     gboolean use_msformat;
     int brief_cols;
     char *user, *status;
@@ -1578,12 +1601,12 @@ setup_listing_format_cmd (void)
     if (SELECTED_IS_PANEL)
         p = MENU_PANEL_IDX == 0 ? left_panel : right_panel;
 
-    list_format = panel_listing_box (p, MENU_PANEL_IDX, &user, &status, &use_msformat, &brief_cols);
-    if (list_format != -1)
+    list_type = panel_listing_box (p, MENU_PANEL_IDX, &user, &status, &use_msformat, &brief_cols);
+    if (list_type != -1)
     {
         switch_to_listing (MENU_PANEL_IDX);
         p = MENU_PANEL_IDX == 0 ? left_panel : right_panel;
-        configure_panel_listing (p, list_format, brief_cols, use_msformat, &user, &status);
+        configure_panel_listing (p, list_type, brief_cols, use_msformat, &user, &status);
         g_free (user);
         g_free (status);
     }
@@ -1613,6 +1636,20 @@ quick_view_cmd (void)
     if (PANEL (get_panel_widget (MENU_PANEL_IDX)) == current_panel)
         change_panel ();
     set_display_type (MENU_PANEL_IDX, view_quick);
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+void
+toggle_listing_cmd (void)
+{
+    int current;
+    WPanel *p;
+
+    current = get_current_index ();
+    p = PANEL (get_panel_widget (current));
+
+    set_basic_panel_listing_to (current, (p->list_type + 1) % LIST_TYPES);
 }
 
 /* --------------------------------------------------------------------------------------------- */

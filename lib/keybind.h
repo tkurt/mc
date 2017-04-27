@@ -137,7 +137,7 @@ enum
     CK_Find,
     CK_DirSize,
     CK_HotListAdd,
-    CK_SetupListingFormat,
+    CK_PanelListingChange,
     CK_CompareDirs,
     CK_OptionsVfs,
     CK_OptionsConfirm,
@@ -149,6 +149,8 @@ enum
     CK_LinkSymbolicEdit,
     CK_ExternalPanelize,
     CK_Filter,
+    CK_SelectMntLeft,
+    CK_SelectMntRight,
     CK_ConnectFish,
     CK_ConnectFtp,
     CK_ConnectSftp,
@@ -165,6 +167,7 @@ enum
     CK_VfsList,
     CK_SaveSetup,
     CK_LinkSymbolic,
+    CK_PanelListingSwitch,
     CK_ShowHidden,
     CK_PanelTree,
     CK_Tree,
@@ -207,7 +210,6 @@ enum
     CK_SortByMTime,
     CK_ScrollLeft,
     CK_ScrollRight,
-    CK_CycleListingFormat,
 
     /* dialog */
     CK_Ok = 300L,

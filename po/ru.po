@@ -3,16 +3,21 @@
 # This file is distributed under the same license as the mc package.
 #
 # Translators:
+# aborodin <aborodin@vmail.ru>, 2011
 # AlexL <loginov.alex.valer@gmail.com>, 2015-2016
 # Alex Tkachenko <alex@bcs.zp.ua>, 1998
-# Andrew Borodin <aborodin@vmail.ru>, 2009-2012
+# and Alex Tkachenko <alex@bcs.zp.ua>, 1998
+# aborodin <aborodin@vmail.ru>, 2009-2012
 # Andrew V. Samoilov <sav@bcs.zp.ua>, 1999,2014
 # Anton Sergeevich Chumak <nightfast@yahoo.co.uk>, 2005
 # Dimitriy Ryazantcev <DJm00n@mail.ru>, 2015
 # Evgeny Bulgakov <bgav@netvision.net.il>, 1999
 # Ilia Maslakov <il.smind@gmail.com>, 2009
+# Mr GreyWolf, 2016
+# Mr.GreyWolf, 2016
 # NaiLi (aka jamesjames) Rootaerc <theism@mail.ru>, 2012
 # Sergey Panov <sipan@mit.edu>, 1999
+# Simple88, 2016
 # Simple88, 2016
 # Slava Zanko <slavazanko@gmail.com>, 2009,2011
 # Valek Filippov <frob@df.ru>, 2000
@@ -20,7 +25,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Midnight Commander\n"
 "Report-Msgid-Bugs-To: http://www.midnight-commander.org/\n"
-"POT-Creation-Date: 2017-04-15 09:50+0300\n"
+"POT-Creation-Date: 2017-03-04 18:55+0100\n"
 "PO-Revision-Date: 2017-02-26 05:09+0000\n"
 "Last-Translator: aborodin <aborodin@vmail.ru>\n"
 "Language-Team: Russian (http://www.transifex.com/mc/mc/language/ru/)\n"
@@ -502,25 +507,25 @@ msgstr ""
 "Проверьте переменную окружения TERM.\n"
 
 msgid "B"
-msgstr "Б"
+msgstr ""
 
 msgid "kB"
-msgstr "кБ"
+msgstr ""
 
 msgid "KiB"
-msgstr "КиБ"
+msgstr ""
 
 msgid "MB"
-msgstr "МБ"
+msgstr ""
 
 msgid "MiB"
-msgstr "МиБ"
+msgstr ""
 
 msgid "GB"
-msgstr "ГБ"
+msgstr ""
 
 msgid "GiB"
-msgstr "ГиБ"
+msgstr ""
 
 msgid "Cannot create pipe descriptor"
 msgstr "Не удалось создать дескриптор канала"
@@ -803,17 +808,14 @@ msgstr ""
 msgid "Color options"
 msgstr "Цветовые настройки"
 
-msgid "[+lineno] file1[:lineno] [file2[:lineno]...]"
-msgstr "[+номер_строки] файл1[:номер_строки] [файл1[:номер_строки]...]"
-
-msgid "file"
-msgstr "файл"
-
-msgid "file1 file2"
-msgstr "файл1 файл2"
+msgid "+number"
+msgstr "+число"
 
 msgid "[this_dir] [other_panel_dir]"
 msgstr "[этот_каталог] [каталог_другой_панели]"
+
+msgid "Set initial line number for the internal editor"
+msgstr "Задать начальную строку для встроенного редактора"
 
 msgid ""
 "\n"
@@ -1971,6 +1973,9 @@ msgstr "Показывать скр&ытые файлы"
 msgid "&Fast dir reload"
 msgstr "&Быстрая загрузка каталога"
 
+msgid "Auto directory si&ze"
+msgstr "&Авторазмер каталогов"
+
 msgid "Ma&rk moves down"
 msgstr "&Отметка перемещает курсор"
 
@@ -2492,6 +2497,9 @@ msgstr "%o %f%n\"%s\"%m"
 #, no-c-format
 msgid "%o %d %f%m"
 msgstr "%o эти %f (%d шт.)%m"
+
+msgid "file"
+msgstr "файл"
 
 msgid "files"
 msgstr "файлы"
@@ -4418,6 +4426,17 @@ msgstr "Поиск"
 
 msgid "ButtonBar|UnWrap"
 msgstr "Разверн"
+
+#: messages for selmnt patch
+msgid "&Mountpoints"
+msgstr "&Точки монтирования"
+
+#: messages for xnet patch
+msgid "~nNetwork Resources"
+msgstr "~nСеть"
+
+msgid "~sSamba Resources"
+msgstr "~sРесурсы Samba"
 
 msgid "ButtonBar|Wrap"
 msgstr "Сверн"
