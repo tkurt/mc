@@ -280,9 +280,7 @@ static void
 menubar_left (WMenuBar * menubar)
 {
     menubar_remove (menubar);
-    if (menubar->selected == 0)
-        menubar->selected = g_list_length (menubar->menu) - 1;
-    else
+    if (menubar->selected != 0)
         menubar->selected--;
     menubar_draw (menubar);
 }
@@ -293,7 +291,8 @@ static void
 menubar_right (WMenuBar * menubar)
 {
     menubar_remove (menubar);
-    menubar->selected = (menubar->selected + 1) % g_list_length (menubar->menu);
+    if ((menubar->selected + 1) < g_list_length (menubar->menu))
+        menubar->selected = (menubar->selected + 1);
     menubar_draw (menubar);
 }
 
@@ -360,7 +359,8 @@ menubar_down (WMenuBar * menubar)
 
     do
     {
-        menu->selected = (menu->selected + 1) % len;
+        if ((menu->selected + 1) < len)
+            menu->selected = (menu->selected + 1);
         entry = MENUENTRY (g_list_nth_data (menu->entries, menu->selected));
     }
     while ((entry == NULL) || (entry->command == CK_IgnoreKey));
@@ -381,9 +381,7 @@ menubar_up (WMenuBar * menubar)
 
     do
     {
-        if (menu->selected == 0)
-            menu->selected = len - 1;
-        else
+        if (menu->selected != 0)
             menu->selected--;
         entry = MENUENTRY (g_list_nth_data (menu->entries, menu->selected));
     }

@@ -141,6 +141,11 @@ mc_skin_hardcoded_ugly_lines (mc_skin_t * mc_skin)
     set_lines ("dbottommiddle", "-");
     set_lines ("dleftmiddle", "|");
     set_lines ("drightmiddle", "|");
+
+    set_lines ("scrollbar", "|");
+    set_lines ("scrollbartop", "^");
+    set_lines ("scrollbarbottom", "v");
+    set_lines ("scrollbarpos", "*");
 }
 
 /* --------------------------------------------------------------------------------------------- */

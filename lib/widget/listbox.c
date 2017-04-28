@@ -95,21 +95,18 @@ listbox_drawscroll (WListbox * l)
     int i;
     int length;
 
+    if (mc_tty_frm[MC_TTY_FRM_SCROLLBARPOS] != '*')
+        tty_setcolor (NORMAL_COLOR);
+
     /* Are we at the top? */
     widget_move (w, 0, w->cols);
-    if (l->top == 0)
-        tty_print_one_vline (TRUE);
-    else
-        tty_print_char ('^');
+    tty_print_char (mc_tty_frm[MC_TTY_FRM_SCROLLBARTOP]);
 
     length = g_queue_get_length (l->list);
 
     /* Are we at the bottom? */
     widget_move (w, max_line, w->cols);
-    if (l->top + w->lines == length || w->lines >= length)
-        tty_print_one_vline (TRUE);
-    else
-        tty_print_char ('v');
+    tty_print_char (mc_tty_frm[MC_TTY_FRM_SCROLLBARBOTTOM]);
 
     /* Now draw the nice relative pointer */
     if (!g_queue_is_empty (l->list))
@@ -119,9 +116,9 @@ listbox_drawscroll (WListbox * l)
     {
         widget_move (w, i, w->cols);
         if (i != line)
-            tty_print_one_vline (TRUE);
+            tty_print_char (mc_tty_frm[MC_TTY_FRM_SCROLLBAR]);
         else
-            tty_print_char ('*');
+            tty_print_char (mc_tty_frm[MC_TTY_FRM_SCROLLBARPOS]);
     }
 }
 
@@ -188,7 +185,7 @@ listbox_draw (WListbox * l, gboolean focused)
 
     l->cursor_y = sel_line;
 
-    if (l->scrollbar && length > w->lines)
+    if (l->scrollbar)
     {
         tty_setcolor (normalc);
         listbox_drawscroll (l);
@@ -284,10 +281,10 @@ listbox_execute_cmd (WListbox * l, long command)
     switch (command)
     {
     case CK_Up:
-        listbox_back (l, TRUE);
+        listbox_back (l, FALSE);
         break;
     case CK_Down:
-        listbox_fwd (l, TRUE);
+        listbox_fwd (l, FALSE);
         break;
     case CK_Top:
         listbox_select_first (l);
