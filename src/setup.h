@@ -157,7 +157,9 @@ void load_keymap_defs (gboolean load_from_file);
 void free_keymap_defs (void);
 
 char *load_selmnt_filter (void);
-extern int selmnt_with_hotlist;
+extern gboolean selmnt_with_hotlist;
+extern gboolean selmnt_always_show;
+extern gboolean selmnt_separators_name_show;
 
 void panel_load_setup (WPanel * panel, const char *section);
 void panel_save_setup (WPanel * panel, const char *section);

@@ -32,8 +32,11 @@ extern int double_frames;
 
 int mc_cd_mountpoint_and_dir = 1;
 int mc_cd_mountpoint_and_dir_align = 1;
+
+#define SELMNT_HOTKEY_SYSMBOLS "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
 char *selmnt_filter;
-char hotkeys_list[37];
+char hotkeys_list[] = SELMNT_HOTKEY_SYSMBOLS;
 
 extern struct mount_entry *mount_list;
 
@@ -47,23 +50,23 @@ struct mount_entry *read_file_system_list (int need_fs_type, int all_fs)
 //	int				i, fd;
 //	char				*tp, dev[_POSIX_NAME_MAX], dir[_POSIX_PATH_MAX];
 
-	static struct mount_entry	*me = NULL;
+    static struct mount_entry	*me = NULL;
 
-	if (me)
-	{
-		if (me->me_devname) free(me->me_devname);
-		if (me->me_mountdir) free(me->me_mountdir);
-		if (me->me_type) free(me->me_type);
-		return (NULL);
-	}
-	else
-		me = (struct mount_entry *)malloc(sizeof(struct mount_entry));
+    if (me)
+    {
+	if (me->me_devname) free(me->me_devname);
+	if (me->me_mountdir) free(me->me_mountdir);
+	if (me->me_type) free(me->me_type);
+	return (NULL);
+    }
+    else
+	me = (struct mount_entry *)malloc(sizeof(struct mount_entry));
 
-	me->me_devname = strdup("//");
-	me->me_mountdir = strdup("//");
-	me->me_type = strdup("unknown");
+    me->me_devname = strdup("//");
+    me->me_mountdir = strdup("//");
+    me->me_type = strdup("unknown");
 
-	return (me);
+    return (me);
 }
 #endif /*__BEOS__*/
 
@@ -120,11 +123,9 @@ static int show_mnt (Mountp *mntpoints, WPanel *panel)
 
     while (mhi)
     {
-	if (
-	    (i = g_utf8_strlen (mhi->mpoint, 255) + 
-		 (mc_cd_mountpoint_and_dir ? 5:3) + 
-		 (mhi->path && mc_cd_mountpoint_and_dir ? g_utf8_strlen(mhi->path, 255):0))
-		> maxlen)
+	if ((i = ((mhi->mpoint) ? g_utf8_strlen (mhi->mpoint, 255) + ((mhi->mpoint[0] == '~') ? -1 : 1) : 0) +
+		 (mc_cd_mountpoint_and_dir ? 5 : 3) +
+		 ((mhi->path && mc_cd_mountpoint_and_dir) ? g_utf8_strlen(mhi->path, 255) + 1 : -2)) > maxlen)
 	    maxlen = i;
 	if (maxlen > panel->widget.cols-8)
 	    maxlen = panel->widget.cols-8;
@@ -136,7 +137,7 @@ static int show_mnt (Mountp *mntpoints, WPanel *panel)
 // maxlen = maximum long of mountpoint menu item name
 
     menu_lines = count;
-    strcpy(hotkeys_list, "0123456789abcdefghijklmnopqrstuvwxyz");
+    strcpy(hotkeys_list, SELMNT_HOTKEY_SYSMBOLS);
 
     /* Create listbox */
     listbox = create_listbox_window_centered (LINES/2, panel->widget.x + panel->widget.cols/2 - 2,
@@ -161,26 +162,46 @@ static int show_mnt (Mountp *mntpoints, WPanel *panel)
 	hotkey = get_hotkey(0);
 
     if (mc_cd_mountpoint_and_dir && mz->path)
-	if (mc_cd_mountpoint_and_dir_align) {
+	if (mc_cd_mountpoint_and_dir_align)
+	{
 	    g_snprintf( b1, sizeof (b1), "%c %s", hotkey, mz->mpoint);
 	    g_snprintf( b2, sizeof (b2), "%s", mz->path);
 	    if ((int) (maxlen - g_utf8_strlen(b1, 255) - g_utf8_strlen(b2, 255) - 4) < 0)
 		g_snprintf( buffer, sizeof (buffer), "%s [%s]", b1, b2);
-	    else {
+	    else 
+	    {
 		static char spaces[256];
 		memset (spaces, ' ' , maxlen - g_utf8_strlen(b1, 255) - g_utf8_strlen(b2, 255) - 4);
 		spaces[maxlen - g_utf8_strlen(b1, 255) - g_utf8_strlen(b2, 255) - 4] = '\0';
 		g_snprintf( buffer, sizeof (buffer), "%s%s[%s]", b1, spaces, b2);
-		}
-	} else 
+	    }
+	} 
+	else 
 	    g_snprintf( buffer, sizeof (buffer), "%c %s [%s]", hotkey, mz->mpoint, mz->path);
     else
 	if (g_utf8_strlen(mz->mpoint, 255) != 0)
 	    g_snprintf( buffer, sizeof (buffer), "%c %s", hotkey, mz->mpoint);
-    else
+	else
 	{
 	    memset (buffer, '-', maxlen - 2);
 	    buffer[maxlen-2] = '\0';
+
+	    if (mz->name && selmnt_separators_name_show)
+	    {
+		int start_pos;
+
+		g_snprintf(b2, sizeof (b2), mz->name);
+		if ( ((g_utf8_strlen(buffer, 255)) - (g_utf8_strlen(mz->name, 255)) ) < 8)
+		    b2[g_utf8_strlen(buffer, 255) - 8] = 0;
+
+		g_snprintf(b1, sizeof (b1), " %s ", b2);
+
+		if ((start_pos = (g_utf8_strlen(buffer, 255) - g_utf8_strlen(b1, 255)) / 2) < 0)
+		    start_pos = 0;
+
+		for (int i = start_pos; ((i - start_pos) < g_utf8_strlen(b1, 255) && (i < g_utf8_strlen(buffer, 255))); i++)
+		    buffer[i] = b1[i - start_pos];
+	    }
 	}
 
 	LISTBOX_APPEND_TEXT( listbox, hotkey, buffer, NULL, NULL );
@@ -207,7 +228,7 @@ static gpointer path_from_history (WPanel *panel, char *mountpoint)
 {
     GList *hd;
 
-	hd = panel->dir_history;
+    hd = panel->dir_history;
 
     if ( !hd ) 
 	return NULL;
@@ -219,32 +240,50 @@ static gpointer path_from_history (WPanel *panel, char *mountpoint)
 	hd = hd->next;
 
     do {
-    struct stat sb;
-    if (strcmp(mountpoint, strdup(hd->data)))
-	if (!strncmp(mountpoint, strdup(hd->data), strlen(mountpoint)) &&
-	    !stat(hd->data, &sb))
-	    return hd->data;
+	struct stat sb;
+	if (strcmp(mountpoint, strdup(hd->data)))
+	    if (!strncmp(mountpoint, strdup(hd->data), strlen(mountpoint)) &&
+		!stat(hd->data, &sb))
+		return hd->data;
 
-	    hd = hd->prev;
+	hd = hd->prev;
     }  while (hd->prev);
-
 
     return NULL;
 }
 
+Mountp *add_to_mountp_list ( Mountp *mounts )
+{
+    if (!mounts)
+    {
+	mounts = malloc (sizeof (Mountp)+1);
+	memset (mounts, 0, sizeof (Mountp));
+    }
+    else
+    {
+	mounts->next = malloc (sizeof (Mountp)+1);
+	memset (mounts->next, 0, sizeof (Mountp));
+
+	mounts->next->prev = mounts;
+	mounts = mounts->next;
+    }
+
+    return mounts;
+}
 
 Mountp *init_mountp ( WPanel *panel )
 {
-    int lockm = 0;
     Mountp *mounts = NULL;
     GSList *temp = NULL;
     struct fs_usage fs_use;
 
+#ifdef ENABLE_VFS_SMB
     char *xsmb_profile;
-    char *xnet_profile;
-    FILE *file = NULL;
     int xsmb_item = 0;
+#endif /* ENABLE_VFS_SMB */
+    char *xnet_profile;
     int xnet_item = 0;
+    FILE *file = NULL;
 
     char cur_selmnt_filter_item[MC_MAXPATHLEN];
     selmnt_filter = load_selmnt_filter ();
@@ -253,7 +292,6 @@ Mountp *init_mountp ( WPanel *panel )
 
     while (temp)
     {
-
 	sprintf(cur_selmnt_filter_item, ":%s:", ((struct mount_entry *) (temp->data))->me_mountdir);
 	if (strstr(selmnt_filter, cur_selmnt_filter_item))
 	{
@@ -261,58 +299,70 @@ Mountp *init_mountp ( WPanel *panel )
 	    continue;
 	}
 
-	if (!mounts)
-	{
-	    get_fs_usage (((struct mount_entry *) (temp->data))->me_mountdir, NULL, &fs_use);
-	    mounts = malloc (sizeof (Mountp)+1);
-	    memset (mounts, 0, sizeof (Mountp));
+	mounts = add_to_mountp_list (mounts);
 
-//	    mounts->type = temp->me_dev;
-//	    mounts->typename = temp->me_type;
-	    mounts->mpoint = strdup (((struct mount_entry *) (temp->data))->me_mountdir);
-	    mounts->path = mc_cd_mountpoint_and_dir ? path_from_history (panel, ((struct mount_entry *) (temp->data))->me_mountdir) : NULL;
-	    mounts->name = strdup (((struct mount_entry *) (temp->data))->me_devname);
-	    mounts->avail = getuid () ? fs_use.fsu_bavail/2 : fs_use.fsu_bfree/2;
-	    mounts->total = fs_use.fsu_blocks/2;
-	    lockm = 1;
-	}
+	get_fs_usage (((struct mount_entry *) (temp->data))->me_mountdir, NULL, &fs_use);
 
-        if (mounts->next)
-        {
-//	    if(mounts->next->typename) { free (mounts->next->typename); mounts->typename = 0; }
-	    if(mounts->next->mpoint) { free (mounts->next->mpoint); mounts->next->mpoint = 0; }
-	    if(mounts->next->name) { free (mounts->next->name); mounts->next->name = 0; }
-	}
-	else
-	{
-	    mounts->next = malloc (sizeof (Mountp)+1);
-	    memset (mounts->next, 0, sizeof (Mountp));
-	    mounts->next->prev = mounts;
-	}
+//	mounts->type = temp->me_dev;
+//	mounts->typename = temp->me_type;
+	mounts->mpoint = strdup (((struct mount_entry *) (temp->data))->me_mountdir);
+	mounts->path = mc_cd_mountpoint_and_dir ? path_from_history (panel, ((struct mount_entry *) (temp->data))->me_mountdir) : NULL;
+	mounts->name = strdup (((struct mount_entry *) (temp->data))->me_devname);
+	mounts->avail = getuid () ? fs_use.fsu_bavail/2 : fs_use.fsu_bfree/2;
+	mounts->total = fs_use.fsu_blocks/2;
 
-	if (lockm != 1)
-	{
-	    get_fs_usage (((struct mount_entry *) (temp->data))->me_mountdir, NULL, &fs_use);
-
-	    mounts = mounts->next;
-	    mounts->mpoint = strdup (((struct mount_entry *) (temp->data))->me_mountdir);
-	    mounts->name = strdup (((struct mount_entry *) (temp->data))->me_devname);
-	    mounts->path = mc_cd_mountpoint_and_dir ? path_from_history (panel, ((struct mount_entry *) (temp->data))->me_mountdir) : NULL;
-	    mounts->avail = getuid () ? fs_use.fsu_bavail/2 : fs_use.fsu_bfree/2;
-	    mounts->total = fs_use.fsu_blocks/2;
-	}
-
-	lockm = 0;
 	temp = temp->next;
     }
     free (temp);
 
-    xnet_profile = g_build_filename (mc_config_get_data_path (), XNET_PROFILE, (char *) NULL);
-    if (file = fopen(xnet_profile, "r"))
+    if (selmnt_with_hotlist)
     {
-	fclose(file);
-	xnet_item++;
+	if (hotlist_file_name == NULL)
+	    hotlist_file_name = mc_config_get_full_path (MC_HOTLIST_FILE);
+
+	if (file = fopen(hotlist_file_name, "r"))
+	{
+	    char *line = NULL;
+	    static char symbols[256], path[256], mpoint[256];
+	    size_t linecap = 0;
+	    ssize_t linelen;
+	    int hotlist_items = 0;
+
+	    while ((linelen = getline(&line, &linecap, file)) > 0)
+		if ((strstr(line, "ENTRY")) && !(strstr(line, " ENTRY")) && (strstr(line, "URL")))
+		{
+		    if (hotlist_items == 0)
+		    {
+			if (mounts)
+			{
+			    mounts = add_to_mountp_list (mounts);
+
+			    mounts->mpoint = "";
+			    mounts->name = "Hotlist";
+			    mounts->path = NULL;
+			    mounts->avail = 0;
+			    mounts->total = 0;
+			}
+
+			hotlist_items++;
+		    }
+
+		    sscanf(line, "%[^\"]\"%[^\"]\"%[^\"]\"%[^\"]\"", symbols, mpoint, symbols, path);
+
+		    mounts = add_to_mountp_list (mounts);
+
+		    mounts->mpoint = strdup (mpoint);
+		    mounts->name = NULL;
+		    mounts->path = strdup (path);
+		    mounts->avail = 0;
+		    mounts->total = 0;
+
+		}
+	    free(line);
+	    fclose(file);
+	}
     }
+
 #ifdef ENABLE_VFS_SMB
     xsmb_profile = g_build_filename (mc_config_get_data_path (), XSMB_PROFILE,  (char *) NULL);
     if (file = fopen(xsmb_profile, "r"))
@@ -322,63 +372,24 @@ Mountp *init_mountp ( WPanel *panel )
     }
 #endif /* ENABLE_VFS_SMB */
 
-    if (selmnt_with_hotlist)
+    xnet_profile = g_build_filename (mc_config_get_data_path (), XNET_PROFILE, (char *) NULL);
+    if (file = fopen(xnet_profile, "r"))
     {
-	if (hotlist_file_name == NULL)
-	    hotlist_file_name = mc_config_get_full_path (MC_HOTLIST_FILE);
-
-	if (file = fopen(hotlist_file_name, "r"))
-	{
-
-	    {
-	    mounts->next = malloc (sizeof (Mountp)+1);
-	    memset (mounts->next, 0, sizeof (Mountp));
-	    mounts->next->prev = mounts;
-
-	    mounts = mounts->next;
-	    mounts->mpoint = "";
-	    mounts->name = NULL;
-	    mounts->path = NULL;
-	    mounts->avail = 0;
-	    mounts->total = 0;
-	    }
-
-	    char *line = NULL;
-	    static char symbols[256], path[256], mpoint[256];
-	    size_t linecap = 0;
-	    ssize_t linelen;
-	    while ((linelen = getline(&line, &linecap, file)) > 0)
-		if ((strstr(line, "ENTRY")) && !(strstr(line, " ENTRY")) && (strstr(line, "URL")))
-		    {
-
-		    sscanf(line, "%[^\"]\"%[^\"]\"%[^\"]\"%[^\"]\"", symbols, mpoint, symbols, path);
-
-		    mounts->next = malloc (sizeof (Mountp)+1);
-		    memset (mounts->next, 0, sizeof (Mountp));
-		    mounts->next->prev = mounts;
-
-		    mounts = mounts->next;
-		    mounts->mpoint = strdup (mpoint);
-		    mounts->name = NULL;
-		    mounts->path = strdup (path);
-		    mounts->avail = 0;
-		    mounts->total = 0;
-
-		    }
-	    free(line);
-	    fclose(file);
-	}
+	fclose(file);
+	xnet_item++;
     }
 
-    if (xsmb_item+xnet_item)
+    if ((mounts) && (
+#ifdef ENABLE_VFS_SMB
+        xsmb_item+
+#endif /* ENABLE_VFS_SMB */
+        xnet_item )
+        )
     {
-	mounts->next = malloc (sizeof (Mountp)+1);
-	memset (mounts->next, 0, sizeof (Mountp));
-	mounts->next->prev = mounts;
+	mounts = add_to_mountp_list (mounts);
 
-	mounts = mounts->next;
 	mounts->mpoint = "";
-	mounts->name = NULL;
+	mounts->name = "Network";
 	mounts->path = NULL;
 	mounts->avail = 0;
 	mounts->total = 0;
@@ -390,11 +401,8 @@ Mountp *init_mountp ( WPanel *panel )
 	char *profile = 
 	    g_strconcat (xsmb_profile, "/xsmb", VFS_PATH_URL_DELIMITER, (char *) NULL);
 
-	mounts->next = malloc (sizeof (Mountp)+1);
-	memset (mounts->next, 0, sizeof (Mountp));
-	mounts->next->prev = mounts;
+	mounts = add_to_mountp_list (mounts);
 
-	mounts = mounts->next;
 	mounts->mpoint = _("~sSamba Resources");
 	mounts->name = NULL;
 	mounts->path = g_strdup (profile);
@@ -410,11 +418,8 @@ Mountp *init_mountp ( WPanel *panel )
 	char *profile = 
 	    g_strconcat (xnet_profile, "/xnet", VFS_PATH_URL_DELIMITER, (char *) NULL);
 
-	mounts->next = malloc (sizeof (Mountp)+1);
-	memset (mounts->next, 0, sizeof (Mountp));
-	mounts->next->prev = mounts;
+	mounts = add_to_mountp_list (mounts);
 
-	mounts = mounts->next;
 	mounts->mpoint = _("~nNetwork Resources");
 	mounts->name = NULL;
 	mounts->path = g_strdup (profile);
@@ -445,27 +450,30 @@ FTP link - ftplink_cmd
 
     if (mount_ls)
     {
-	if (mount_ls->prev || mount_ls->next)
+	if (selmnt_always_show || (mount_ls->prev || mount_ls->next))
 	{
 	    inta = show_mnt (mount_ls, panel);
 
-    if (inta != -1)
-    {
-	while (mount_ls->prev)           /* goto first */
-	    mount_ls = mount_ls->prev;
+	    if (inta != -1)
+	    {
+		while (mount_ls->prev)           /* goto first */
+		    mount_ls = mount_ls->prev;
 
-	for (i=0; i<inta; i++)
-	    if (mount_ls->next)
-		mount_ls = mount_ls->next;
+		for (i=0; i<inta; i++)
+		    if (mount_ls->next)
+			mount_ls = mount_ls->next;
 // resulting dirname
-		    if ((mc_cd_mountpoint_and_dir && mount_ls->path) ||
-		        (mount_ls->mpoint[0] != '/')) {
-		s = mount_ls->path;
-	    } else {
-		if (mount_ls->mpoint)
-		    s = mount_ls->mpoint;
+		if ((mc_cd_mountpoint_and_dir && mount_ls->path) ||
+			(mount_ls->mpoint[0] != '/'))
+		{
+		    s = mount_ls->path;
+		}
+		else
+		{
+		    if (mount_ls->mpoint)
+			s = mount_ls->mpoint;
+		}
 	    }
-    }
 
 	    if (s) /* execute CD */
 	    {

@@ -216,7 +216,9 @@ struct macro_action_t record_macro_buf[MAX_MACRO_LENGTH];
 GArray *macros_list;
 #endif /* USE_INTERNAL_EDIT */
 
-int selmnt_with_hotlist = FALSE;
+gboolean selmnt_with_hotlist = FALSE;
+gboolean selmnt_always_show = FALSE;
+gboolean selmnt_separators_name_show = TRUE;
 
 /*** file scope macro definitions ****************************************************************/
 
@@ -357,6 +359,8 @@ static const struct
     { "auto_fill_mkdir_name", &auto_fill_mkdir_name },
     { "copymove_persistent_attr", &copymove_persistent_attr },
     { "selmnt_with_hotlist", &selmnt_with_hotlist },
+    { "selmnt_always_show", &selmnt_always_show },
+    { "selmnt_separators_name_show", &selmnt_separators_name_show },
     { NULL, NULL }
 };
 

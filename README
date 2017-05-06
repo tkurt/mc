@@ -2,7 +2,7 @@ mc-4.8.19 sources with some specific patches:
 
 Installation:
 
-1. Install dependencies. In debian/ubuntu:
+1. Install build dependencies. In debian/ubuntu:
 sudo apt-get build-dep mc
 
 2. Configure:
@@ -17,7 +17,6 @@ sudo make install
 Applied patches:
 
 01-to-git/02-scrollbar.patch - shows scrollbars in panels
-01-to-git/07-menu.patch - main menu fix
 04-ose/99-02-f3-dirsize.patch - F3 shows dirsize
 04-ose/99-12-selmnt.patch - Shift+F1/F2 Mountpoints menu
 04-ose/99-16-mc.charsets.patch - only russian charsets
