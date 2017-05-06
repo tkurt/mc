@@ -124,11 +124,6 @@ mc_skin_lines_parse_ini_file (mc_skin_t * mc_skin)
     mc_tty_frm[MC_TTY_FRM_DBOTTOMMIDDLE] = mc_skin_lines_load_frm (mc_skin, "dbottommiddle");
     mc_tty_frm[MC_TTY_FRM_DLEFTMIDDLE] = mc_skin_lines_load_frm (mc_skin, "dleftmiddle");
     mc_tty_frm[MC_TTY_FRM_DRIGHTMIDDLE] = mc_skin_lines_load_frm (mc_skin, "drightmiddle");
-
-    mc_tty_frm[MC_TTY_FRM_SCROLLBAR] = mc_skin_lines_load_frm (mc_skin, "scrollbar");
-    mc_tty_frm[MC_TTY_FRM_SCROLLBARTOP] = mc_skin_lines_load_frm (mc_skin, "scrollbartop");
-    mc_tty_frm[MC_TTY_FRM_SCROLLBARBOTTOM] = mc_skin_lines_load_frm (mc_skin, "scrollbarbottom");
-    mc_tty_frm[MC_TTY_FRM_SCROLLBARPOS] = mc_skin_lines_load_frm (mc_skin, "scrollbarpos");
 }
 
 /* --------------------------------------------------------------------------------------------- */
