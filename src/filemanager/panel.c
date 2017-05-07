@@ -1253,6 +1253,35 @@ panel_get_encoding_info_str (const WPanel * panel)
 /* --------------------------------------------------------------------------------------------- */
 
 static void
+panel_drawscroll (WPanel *p)
+{
+    int line = 0;
+    int i;
+    int max_line = p->widget.lines-1;
+
+    if (mc_tty_frm[MC_TTY_FRM_SCROLLBARPOS] != '*')
+	tty_setcolor (REVERSE_COLOR);
+
+    widget_move (&p->widget, 1, p->widget.cols-1);
+    tty_print_char (mc_tty_frm[MC_TTY_FRM_SCROLLBARTOP]);
+
+    widget_move (&p->widget, max_line-(panels_options.show_mini_info ? 3 : 1), p->widget.cols-1);
+    tty_print_char (mc_tty_frm[MC_TTY_FRM_SCROLLBARBOTTOM]);
+
+    /* Now draw the nice relative pointer */
+    if (p->dir.len > 1)
+	line = 2+ ((p->selected * (p->widget.lines - (panels_options.show_mini_info ? 7 : 5))) / (p->dir.len-1));
+
+    for (i = 2; i < max_line- (panels_options.show_mini_info ? 3 : 1); i++){
+	widget_move (&p->widget, i, p->widget.cols-1);
+	if (i != line)
+	    tty_print_char(mc_tty_frm[MC_TTY_FRM_SCROLLBAR]);
+	else
+	    tty_print_char (mc_tty_frm[MC_TTY_FRM_SCROLLBARPOS]);
+    }
+}
+
+static void
 show_dir (const WPanel * panel)
 {
     const Widget *w = CONST_WIDGET (panel);
@@ -1296,19 +1325,22 @@ show_dir (const WPanel * panel)
         tmp = panel_get_encoding_info_str (panel);
         if (tmp != NULL)
         {
-            tty_printf ("%s", tmp);
-            widget_move (w, 0, 3 + strlen (tmp));
+            tty_printf (" %s ", tmp);
+            widget_move (w, 0, 3 + strlen (tmp) + 2);
             g_free (tmp);
         }
     }
 #endif
 
     if (panel->active)
-        tty_setcolor (REVERSE_COLOR);
+        tty_setcolor (SELECTED_COLOR);
 
     tmp = panel_correct_path_to_show (panel);
     tty_printf (" %s ", str_term_trim (tmp, MIN (MAX (w->cols - 12, 0), w->cols)));
     g_free (tmp);
+
+    if (panel->active)
+	panel_drawscroll (panel);
 
     if (!panels_options.show_mini_info)
     {
