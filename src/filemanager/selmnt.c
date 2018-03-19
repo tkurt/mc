@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <config.h>
 #include <sys/stat.h>
 
@@ -16,6 +13,7 @@
 
 #include "lib/widget/wtools.h"
 #include "lib/widget.h"
+#include "lib/search.h"
 
 #include "cmd.h"
 #include "lib/tty/tty.h"
@@ -26,21 +24,13 @@
 #include "hotlist.h"
 #include "../setup.h"
 
-//extern int selmnt_first_time;
-
-extern int double_frames;
-
-int mc_cd_mountpoint_and_dir = 1;
-int mc_cd_mountpoint_and_dir_align = 1;
+gboolean mc_cd_mountpoint_and_dir = TRUE;
+gboolean mc_cd_mountpoint_and_dir_align = TRUE;
 
 #define SELMNT_HOTKEY_SYSMBOLS "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 char *selmnt_filter;
 char hotkeys_list[] = SELMNT_HOTKEY_SYSMBOLS;
-
-extern struct mount_entry *mount_list;
-
-extern int double_frames;
 
 #ifdef __BEOS__
 struct mount_entry *read_file_system_list (int need_fs_type, int all_fs);
@@ -285,15 +275,13 @@ Mountp *init_mountp ( WPanel *panel )
     int xnet_item = 0;
     FILE *file = NULL;
 
-    char cur_selmnt_filter_item[MC_MAXPATHLEN];
     selmnt_filter = load_selmnt_filter ();
 
     temp = read_file_system_list ();
 
     while (temp)
     {
-	sprintf(cur_selmnt_filter_item, ":%s:", ((struct mount_entry *) (temp->data))->me_mountdir);
-	if (strstr(selmnt_filter, cur_selmnt_filter_item))
+	if (mc_search(selmnt_filter, NULL, ((struct mount_entry *) (temp->data))->me_mountdir, MC_SEARCH_T_REGEX))
 	{
 	    temp = temp->next;
 	    continue;

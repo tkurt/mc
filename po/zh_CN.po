@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Midnight Commander\n"
 "Report-Msgid-Bugs-To: http://www.midnight-commander.org/\n"
-"POT-Creation-Date: 2017-03-04 18:55+0100\n"
-"PO-Revision-Date: 2017-02-25 09:22+0000\n"
+"POT-Creation-Date: 2018-02-03 18:28+0300\n"
+"PO-Revision-Date: 2017-09-19 09:10+0000\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/mc/mc/language/"
 "zh_CN/)\n"
@@ -595,7 +595,6 @@ msgstr "在 %s 中创建临时文件\n"
 msgid "Temporary files will not be created\n"
 msgstr "无法创建临时文件\n"
 
-#, c-format
 msgid "Press any key to continue..."
 msgstr "按任意键继续..."
 
@@ -664,6 +663,10 @@ msgstr "打印配置选项"
 msgid "Print last working directory to specified file"
 msgstr "将工作目录打印到指定文件"
 
+#, fuzzy
+msgid "<file>"
+msgstr "文件"
+
 msgid "Enables subshell support (default)"
 msgstr "启用子 shell 支持(默认)"
 
@@ -676,11 +679,18 @@ msgstr "记录 ftp 对话到指定的文件"
 msgid "Set debug level"
 msgstr "设置调试级别"
 
+msgid "<integer>"
+msgstr ""
+
 msgid "Launches the file viewer on a file"
 msgstr "在文件上启动文件查看器"
 
 msgid "Edit files"
 msgstr "编辑文件"
+
+#, fuzzy
+msgid "<file> ..."
+msgstr "打开文件(&O)..."
 
 msgid "Forces xterm features"
 msgstr "强制使用 xterm 特性"
@@ -720,6 +730,9 @@ msgstr "请求运行在彩色模式"
 
 msgid "Specifies a color configuration"
 msgstr "指定颜色配置"
+
+msgid "<string>"
+msgstr ""
 
 msgid "Show mc with specified skin"
 msgstr "用指定的皮肤显示 MC"
@@ -790,14 +803,17 @@ msgstr ""
 msgid "Color options"
 msgstr "颜色选项"
 
-msgid "+number"
-msgstr "+数字"
+msgid "[+lineno] file1[:lineno] [file2[:lineno]...]"
+msgstr ""
+
+msgid "file"
+msgstr "文件"
+
+msgid "file1 file2"
+msgstr ""
 
 msgid "[this_dir] [other_panel_dir]"
 msgstr "[this_dir] [other_panel_dir]"
-
-msgid "Set initial line number for the internal editor"
-msgstr "设置内部编辑器的初始行号"
 
 msgid ""
 "\n"
@@ -1790,7 +1806,6 @@ msgstr "无法获取 %s 的本地副本"
 msgid "The shell is already running a command"
 msgstr "Shell 正在运行一个命令"
 
-#, c-format
 msgid "Type 'exit' to return to the Midnight Commander"
 msgstr "输入 'exit' 返回 Midnight Commander"
 
@@ -1825,6 +1840,17 @@ msgid ""
 msgstr ""
 "无法 chmod“%s”\n"
 "%s"
+
+#, fuzzy
+msgid "&Ignore"
+msgstr "忽略锁(&I)"
+
+#, fuzzy
+msgid "Ignore &all"
+msgstr "忽略锁(&I)"
+
+msgid "&Retry"
+msgstr "重试(&R)"
 
 #, c-format
 msgid ""
@@ -2027,8 +2053,8 @@ msgstr "列"
 msgid "User &mini status"
 msgstr "用户简要状态(&M)"
 
-msgid "Listing mode"
-msgstr "列表模式"
+msgid "Listing format"
+msgstr ""
 
 msgid "Executable &first"
 msgstr "可执行文件优先(&f)"
@@ -2475,9 +2501,6 @@ msgstr "%o %f%n\"%s\"%m"
 msgid "%o %d %f%m"
 msgstr "%o %d %f%m"
 
-msgid "file"
-msgstr "文件"
-
 msgid "files"
 msgstr "文件"
 
@@ -2505,15 +2528,11 @@ msgstr ""
 "无法读取源链接“%s”\n"
 "%s"
 
-#, fuzzy
 msgid ""
 "Cannot make stable symlinks across non-local filesystems:\n"
 "\n"
 "Option Stable Symlinks will be disabled"
 msgstr ""
-"无法在非本地文件系统上创建稳定的符号链接: \n"
-"\n"
-"稳定的符号链接选项将被取消"
 
 #, c-format
 msgid ""
@@ -2523,11 +2542,32 @@ msgstr ""
 "无法创建目标符号链接“%s”\n"
 "%s"
 
+#, c-format
+msgid ""
+"\"%s\"\n"
+"and\n"
+"\"%s\"\n"
+"are the same directory"
+msgstr ""
+"“%s”\n"
+"和\n"
+"“%s”\n"
+"是同一个目录"
+
+#, c-format
+msgid ""
+"\"%s\"\n"
+"and\n"
+"\"%s\"\n"
+"are the same file"
+msgstr ""
+"“%s”\n"
+"和\n"
+"“%s”\n"
+"是同一个文件"
+
 msgid "Ski&p all"
 msgstr "路过全部(&I)"
-
-msgid "&Retry"
-msgstr "重试(&R)"
 
 #, c-format
 msgid ""
@@ -2552,23 +2592,19 @@ msgstr "无(&E)"
 
 #, c-format
 msgid ""
+"Cannot remove file \"%s\"\n"
+"%s"
+msgstr ""
+"无法删除文件“%s”\n"
+"%s"
+
+#, c-format
+msgid ""
 "Cannot stat file \"%s\"\n"
 "%s"
 msgstr ""
 "无法 stat 文件“%s”\n"
 "%s"
-
-#, c-format
-msgid ""
-"\"%s\"\n"
-"and\n"
-"\"%s\"\n"
-"are the same file"
-msgstr ""
-"“%s”\n"
-"和\n"
-"“%s”\n"
-"是同一个文件"
 
 #, c-format
 msgid "Cannot overwrite directory \"%s\""
@@ -2580,22 +2616,6 @@ msgid ""
 "%s"
 msgstr ""
 "无法移动文件“%s”到“%s”\n"
-"%s"
-
-#, c-format
-msgid ""
-"Cannot remove file \"%s\"\n"
-"%s"
-msgstr ""
-"无法删除文件“%s”\n"
-"%s"
-
-#, c-format
-msgid ""
-"Cannot delete file \"%s\"\n"
-"%s"
-msgstr ""
-"无法删除文件“%s”\n"
 "%s"
 
 #, c-format
@@ -2613,6 +2633,25 @@ msgid ""
 msgstr ""
 "无法覆盖目录“%s”\n"
 "%s"
+
+#, c-format
+msgid ""
+"Cannot overwrite file \"%s\"\n"
+"%s"
+msgstr ""
+"无法覆盖文件“%s”\n"
+"%s"
+
+#, c-format
+msgid ""
+"Cannot move directory \"%s\" to \"%s\"\n"
+"%s"
+msgstr ""
+"无法移动目录“%s”到“%s”\n"
+"%s"
+
+msgid "Cannot operate on \"..\"!"
+msgstr "无法操作\"..\"!"
 
 #, c-format
 msgid ""
@@ -2779,39 +2818,8 @@ msgstr ""
 "%s"
 
 #, c-format
-msgid ""
-"\"%s\"\n"
-"and\n"
-"\"%s\"\n"
-"are the same directory"
-msgstr ""
-"“%s”\n"
-"和\n"
-"“%s”\n"
-"是同一个目录"
-
-#, c-format
-msgid ""
-"Cannot overwrite file \"%s\"\n"
-"%s"
-msgstr ""
-"无法覆盖文件“%s”\n"
-"%s"
-
-#, c-format
-msgid ""
-"Cannot move directory \"%s\" to \"%s\"\n"
-"%s"
-msgstr ""
-"无法移动目录“%s”到“%s”\n"
-"%s"
-
-#, c-format
 msgid "Directories: %zu, total size: %s"
 msgstr "目录: %zu, 总体积: %s"
-
-msgid "Cannot operate on \"..\"!"
-msgstr "无法操作\"..\"!"
 
 msgid "Sorry, I could not put the job in background"
 msgstr "抱歉，无法将任务放到后台"
@@ -3239,8 +3247,8 @@ msgstr "快速查看(&Q)"
 msgid "&Info"
 msgstr "信息(&I)"
 
-msgid "&Listing mode..."
-msgstr "列表模式(&L)..."
+msgid "&Listing format..."
+msgstr ""
 
 msgid "&Sort order..."
 msgstr "排序(&S)..."
@@ -3669,50 +3677,6 @@ msgstr ""
 "无法写入 %s 文件: \n"
 "%s\n"
 
-msgid "Debug"
-msgstr "调试"
-
-msgid "ERROR:"
-msgstr "错误: "
-
-msgid "True:"
-msgstr "正确: "
-
-msgid "False:"
-msgstr "错误: "
-
-msgid "Error calling program"
-msgstr "调用程序错误"
-
-msgid "Warning -- ignoring file"
-msgstr "警告 － 忽略文件"
-
-#, c-format
-msgid ""
-"File %s is not owned by root or you or is world writable.\n"
-"Using it may compromise your security"
-msgstr ""
-"文件 %s 的拥有者不是 root 或者您，或者是全局可写。\n"
-"使用它可能会妨碍您的安全"
-
-msgid "Format error on file Extensions File"
-msgstr "扩展文件格式错误"
-
-#, c-format
-msgid "The %%var macro has no default"
-msgstr "%%var 宏没有默认值"
-
-#, c-format
-msgid "The %%var macro has no variable"
-msgstr "%%var 宏没有变量"
-
-#, c-format
-msgid "No suitable entries found in %s"
-msgstr "在 %s 没有找到相应的项"
-
-msgid "User menu"
-msgstr "用户菜单"
-
 msgid "Help file format error\n"
 msgstr "帮助文件格式错误\n"
 
@@ -3930,6 +3894,50 @@ msgstr "用户数据"
 
 msgid "Cache directory:"
 msgstr "缓存目录: "
+
+msgid "Debug"
+msgstr "调试"
+
+msgid "ERROR:"
+msgstr "错误: "
+
+msgid "True:"
+msgstr "正确: "
+
+msgid "False:"
+msgstr "错误: "
+
+msgid "Error calling program"
+msgstr "调用程序错误"
+
+msgid "Warning -- ignoring file"
+msgstr "警告 － 忽略文件"
+
+#, c-format
+msgid ""
+"File %s is not owned by root or you or is world writable.\n"
+"Using it may compromise your security"
+msgstr ""
+"文件 %s 的拥有者不是 root 或者您，或者是全局可写。\n"
+"使用它可能会妨碍您的安全"
+
+msgid "Format error on file Extensions File"
+msgstr "扩展文件格式错误"
+
+#, c-format
+msgid "The %%var macro has no default"
+msgstr "%%var 宏没有默认值"
+
+#, c-format
+msgid "The %%var macro has no variable"
+msgstr "%%var 宏没有变量"
+
+#, c-format
+msgid "No suitable entries found in %s"
+msgstr "在 %s 没有找到相应的项"
+
+msgid "User menu"
+msgstr "用户菜单"
 
 #, c-format
 msgid ""
@@ -4221,6 +4229,10 @@ msgstr "sftp: SSH 会话建立失败"
 msgid "sftp: No file handler data present for reading file"
 msgstr "sftp: 读取的文件没有指定处理程序"
 
+#, fuzzy, c-format
+msgid "sftp: socket error: %s"
+msgstr "ftpfs: 中止错误: %s"
+
 #, c-format
 msgid "sftp: (Ctrl-G break) Listing... %s"
 msgstr "sftp: (Ctrl-G 终止) 正在列出... %s"
@@ -4468,3 +4480,10 @@ msgstr "从头继续搜索?"
 
 msgid "Cannot fetch a local copy of /ftp://some.host/editme.txt"
 msgstr "无法获取 /ftp://some.host/editme.txt 的本地副本"
+
+#~ msgid ""
+#~ "Cannot delete file \"%s\"\n"
+#~ "%s"
+#~ msgstr ""
+#~ "无法删除文件“%s”\n"
+#~ "%s"

@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Midnight Commander\n"
 "Report-Msgid-Bugs-To: http://www.midnight-commander.org/\n"
-"POT-Creation-Date: 2017-03-04 18:55+0100\n"
-"PO-Revision-Date: 2017-02-25 15:19+0000\n"
+"POT-Creation-Date: 2018-02-03 18:28+0300\n"
+"PO-Revision-Date: 2017-09-19 09:10+0000\n"
 "Last-Translator: David Martin <dhmartina@yahoo.es>\n"
 "Language-Team: Spanish (http://www.transifex.com/mc/mc/language/es/)\n"
 "Language: es\n"
@@ -594,7 +594,6 @@ msgstr "Los archivos temporales se ubicarán en %s\n"
 msgid "Temporary files will not be created\n"
 msgstr "No se crearán archivos temporales\n"
 
-#, c-format
 msgid "Press any key to continue..."
 msgstr "Presione cualquier tecla para continuar..."
 
@@ -663,6 +662,10 @@ msgstr "Mostrar opciones de configuración"
 msgid "Print last working directory to specified file"
 msgstr "Guardar el nombre del directorio en un archivo"
 
+#, fuzzy
+msgid "<file>"
+msgstr "archivo"
+
 msgid "Enables subshell support (default)"
 msgstr "Activar uso de subshell (por defecto)"
 
@@ -675,11 +678,18 @@ msgstr "Registrar diálogos ftp en un archivo"
 msgid "Set debug level"
 msgstr "Fijar el nivel de depuración"
 
+msgid "<integer>"
+msgstr ""
+
 msgid "Launches the file viewer on a file"
 msgstr "Abrir un archivo con el visor"
 
 msgid "Edit files"
 msgstr "Editar archivos"
+
+#, fuzzy
+msgid "<file> ..."
+msgstr "abrir archiv&O..."
 
 msgid "Forces xterm features"
 msgstr "Utilizar las posibilidades de xterm"
@@ -719,6 +729,9 @@ msgstr "Solicitar la ejecución en color"
 
 msgid "Specifies a color configuration"
 msgstr "Indicar una configuración de colores"
+
+msgid "<string>"
+msgstr ""
 
 msgid "Show mc with specified skin"
 msgstr "Mostrar mc con la careta (skin) indicada"
@@ -793,14 +806,17 @@ msgstr ""
 msgid "Color options"
 msgstr "Opciones de color"
 
-msgid "+number"
-msgstr "+número"
+msgid "[+lineno] file1[:lineno] [file2[:lineno]...]"
+msgstr "[+númlínea] archivo1[:númlínea] [archivo2[:númlínea]...]"
+
+msgid "file"
+msgstr "archivo"
+
+msgid "file1 file2"
+msgstr "archivo1 archivo2"
 
 msgid "[this_dir] [other_panel_dir]"
 msgstr "[DIRECTORIO] [SEGUNDO_DIRECTORIO]"
-
-msgid "Set initial line number for the internal editor"
-msgstr "Línea de comienzo al abrir archivo con editor interno"
 
 msgid ""
 "\n"
@@ -1796,7 +1812,6 @@ msgstr "Imposible obtener una copia local de «%s»"
 msgid "The shell is already running a command"
 msgstr "El shell ya está ejecutando un comando"
 
-#, c-format
 msgid "Type 'exit' to return to the Midnight Commander"
 msgstr "Teclee «exit» para regresar a Midnight Commander"
 
@@ -1831,6 +1846,17 @@ msgid ""
 msgstr ""
 "Imposible cambiar los permisos de «%s»\n"
 "%s"
+
+#, fuzzy
+msgid "&Ignore"
+msgstr "&Ignorar bloqueo"
+
+#, fuzzy
+msgid "Ignore &all"
+msgstr "&Ignorar bloqueo"
+
+msgid "&Retry"
+msgstr "&Reintentar"
 
 #, c-format
 msgid ""
@@ -2034,8 +2060,8 @@ msgstr "columnas"
 msgid "User &mini status"
 msgstr "&Mini-estado"
 
-msgid "Listing mode"
-msgstr "Listado"
+msgid "Listing format"
+msgstr "Formato de listado"
 
 msgid "Executable &first"
 msgstr "&Ejecutables primero"
@@ -2484,9 +2510,6 @@ msgstr "%o %f%n«%s»%m"
 msgid "%o %d %f%m"
 msgstr "%o %d %f%m"
 
-msgid "file"
-msgstr "archivo"
-
 msgid "files"
 msgstr "archivos"
 
@@ -2514,7 +2537,6 @@ msgstr ""
 "Imposible leer el enlace original «%s»\n"
 "%s"
 
-#, fuzzy
 msgid ""
 "Cannot make stable symlinks across non-local filesystems:\n"
 "\n"
@@ -2533,11 +2555,32 @@ msgstr ""
 "Imposible crear el enlace simbólico destino «%s»\n"
 "%s"
 
+#, c-format
+msgid ""
+"\"%s\"\n"
+"and\n"
+"\"%s\"\n"
+"are the same directory"
+msgstr ""
+"«%s»\n"
+"y\n"
+"«%s»\n"
+"son el mismo directorio"
+
+#, c-format
+msgid ""
+"\"%s\"\n"
+"and\n"
+"\"%s\"\n"
+"are the same file"
+msgstr ""
+"«%s»\n"
+"y\n"
+"«%s»\n"
+"son el mismo archivo"
+
 msgid "Ski&p all"
 msgstr "saltar &Todos"
-
-msgid "&Retry"
-msgstr "&Reintentar"
 
 #, c-format
 msgid ""
@@ -2561,23 +2604,19 @@ msgstr "nin&Guno"
 
 #, c-format
 msgid ""
+"Cannot remove file \"%s\"\n"
+"%s"
+msgstr ""
+"Imposible borrar el archivo «%s»\n"
+"%s"
+
+#, c-format
+msgid ""
 "Cannot stat file \"%s\"\n"
 "%s"
 msgstr ""
 "Imposible identificar el archivo «%s»\n"
 "%s"
-
-#, c-format
-msgid ""
-"\"%s\"\n"
-"and\n"
-"\"%s\"\n"
-"are the same file"
-msgstr ""
-"«%s»\n"
-"y\n"
-"«%s»\n"
-"son el mismo archivo"
 
 #, c-format
 msgid "Cannot overwrite directory \"%s\""
@@ -2589,22 +2628,6 @@ msgid ""
 "%s"
 msgstr ""
 "Imposible mover el archivo «%s» a «%s»\n"
-"%s"
-
-#, c-format
-msgid ""
-"Cannot remove file \"%s\"\n"
-"%s"
-msgstr ""
-"Imposible borrar el archivo «%s»\n"
-"%s"
-
-#, c-format
-msgid ""
-"Cannot delete file \"%s\"\n"
-"%s"
-msgstr ""
-"Imposible borrar el archivo «%s»\n"
 "%s"
 
 #, c-format
@@ -2622,6 +2645,25 @@ msgid ""
 msgstr ""
 "Imposible sobrescribir el directorio «%s»\n"
 "%s"
+
+#, c-format
+msgid ""
+"Cannot overwrite file \"%s\"\n"
+"%s"
+msgstr ""
+"Imposible sobrescribir el archivo «%s»\n"
+"%s"
+
+#, c-format
+msgid ""
+"Cannot move directory \"%s\" to \"%s\"\n"
+"%s"
+msgstr ""
+"Imposible mover el directorio «%s» a «%s»\n"
+"%s"
+
+msgid "Cannot operate on \"..\"!"
+msgstr "¡Imposible operar sobre «..»!"
 
 #, c-format
 msgid ""
@@ -2788,39 +2830,8 @@ msgstr ""
 "%s"
 
 #, c-format
-msgid ""
-"\"%s\"\n"
-"and\n"
-"\"%s\"\n"
-"are the same directory"
-msgstr ""
-"«%s»\n"
-"y\n"
-"«%s»\n"
-"son el mismo directorio"
-
-#, c-format
-msgid ""
-"Cannot overwrite file \"%s\"\n"
-"%s"
-msgstr ""
-"Imposible sobrescribir el archivo «%s»\n"
-"%s"
-
-#, c-format
-msgid ""
-"Cannot move directory \"%s\" to \"%s\"\n"
-"%s"
-msgstr ""
-"Imposible mover el directorio «%s» a «%s»\n"
-"%s"
-
-#, c-format
 msgid "Directories: %zu, total size: %s"
 msgstr "Directorios: %zu, tamaño total: %s"
-
-msgid "Cannot operate on \"..\"!"
-msgstr "¡Imposible operar sobre «..»!"
 
 msgid "Sorry, I could not put the job in background"
 msgstr "Lo siento, no se pudo poner la tarea en 2º plano"
@@ -3250,8 +3261,8 @@ msgstr "&Vista rápida"
 msgid "&Info"
 msgstr "&Información"
 
-msgid "&Listing mode..."
-msgstr "&Modo de listado..."
+msgid "&Listing format..."
+msgstr "for&Mato de listado..."
 
 msgid "&Sort order..."
 msgstr "&Ordenar..."
@@ -3682,50 +3693,6 @@ msgstr ""
 "Imposible escribir al archivo %s:\n"
 "%s\n"
 
-msgid "Debug"
-msgstr "Depurar"
-
-msgid "ERROR:"
-msgstr "ERROR:"
-
-msgid "True:"
-msgstr "Verdadero:"
-
-msgid "False:"
-msgstr "Falso:"
-
-msgid "Error calling program"
-msgstr "Error al ejecutar el programa"
-
-msgid "Warning -- ignoring file"
-msgstr "Cuidado -- ignorando el archivo"
-
-#, c-format
-msgid ""
-"File %s is not owned by root or you or is world writable.\n"
-"Using it may compromise your security"
-msgstr ""
-"El archivo «%s» no pertenece a Ud. ni a root, ni tiene permiso\n"
-"global de escritura. Usarlo podría comprometer su seguridad."
-
-msgid "Format error on file Extensions File"
-msgstr "Error de formato en el Archivo de Extensiones"
-
-#, c-format
-msgid "The %%var macro has no default"
-msgstr "La macro %%var no tiene valor predeterminado"
-
-#, c-format
-msgid "The %%var macro has no variable"
-msgstr "La macro %%var no contiene variables"
-
-#, c-format
-msgid "No suitable entries found in %s"
-msgstr "No se encuentran entradas apropiadas en %s"
-
-msgid "User menu"
-msgstr "Menú de usuario"
-
 msgid "Help file format error\n"
 msgstr "Error en el formato del archivo de ayuda\n"
 
@@ -3943,6 +3910,50 @@ msgstr "Datos de usuario"
 
 msgid "Cache directory:"
 msgstr "Directorio de caché:"
+
+msgid "Debug"
+msgstr "Depurar"
+
+msgid "ERROR:"
+msgstr "ERROR:"
+
+msgid "True:"
+msgstr "Verdadero:"
+
+msgid "False:"
+msgstr "Falso:"
+
+msgid "Error calling program"
+msgstr "Error al ejecutar el programa"
+
+msgid "Warning -- ignoring file"
+msgstr "Cuidado -- ignorando el archivo"
+
+#, c-format
+msgid ""
+"File %s is not owned by root or you or is world writable.\n"
+"Using it may compromise your security"
+msgstr ""
+"El archivo «%s» no pertenece a Ud. ni a root, ni tiene permiso\n"
+"global de escritura. Usarlo podría comprometer su seguridad."
+
+msgid "Format error on file Extensions File"
+msgstr "Error de formato en el Archivo de Extensiones"
+
+#, c-format
+msgid "The %%var macro has no default"
+msgstr "La macro %%var no tiene valor predeterminado"
+
+#, c-format
+msgid "The %%var macro has no variable"
+msgstr "La macro %%var no contiene variables"
+
+#, c-format
+msgid "No suitable entries found in %s"
+msgstr "No se encuentran entradas apropiadas en %s"
+
+msgid "User menu"
+msgstr "Menú de usuario"
 
 #, c-format
 msgid ""
@@ -4234,6 +4245,10 @@ msgstr "sftp: Error al establecer sesión SSH"
 msgid "sftp: No file handler data present for reading file"
 msgstr "sftp: Sin datos del descriptor de archivo al leer"
 
+#, fuzzy, c-format
+msgid "sftp: socket error: %s"
+msgstr "ftpfs: Error al abortar: %s"
+
 #, c-format
 msgid "sftp: (Ctrl-G break) Listing... %s"
 msgstr "sftp: (Ctrl-G para cancelar) Listando... %s"
@@ -4481,3 +4496,10 @@ msgstr "¿Continuar desde el principio?"
 
 msgid "Cannot fetch a local copy of /ftp://some.host/editme.txt"
 msgstr "Imposible obtener una copia local de /ftp://ese.equipo/editame.txt"
+
+#~ msgid ""
+#~ "Cannot delete file \"%s\"\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Imposible borrar el archivo «%s»\n"
+#~ "%s"

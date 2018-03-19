@@ -1,7 +1,7 @@
 /*
    Find file command for the Midnight Commander
 
-   Copyright (C) 1995-2017
+   Copyright (C) 1995-2018
    Free Software Foundation, Inc.
 
    Written  by:
@@ -540,7 +540,7 @@ find_parm_callback (Widget * w, Widget * sender, widget_msg_t msg, int parm, voi
         }
 
         first_draw = FALSE;
-        /* fall through to call MSG_DRAW default handler */
+        MC_FALLTHROUGH;         /* to call MSG_DRAW default handler */
 
     default:
         return dlg_default_callback (w, sender, msg, parm, data);
@@ -1754,6 +1754,7 @@ do_find (const char *start_dir, ssize_t start_dir_len, const char *ignore_dirs,
         dir_list *list = &current_panel->dir;
         char *name = NULL;
 
+        panel_clean_dir (current_panel);
         dir_list_init (list);
 
         for (i = 0, entry = listbox_get_first_link (find_list); entry != NULL;
@@ -1803,8 +1804,6 @@ do_find (const char *start_dir, ssize_t start_dir_len, const char *ignore_dirs,
                 continue;
             }
 
-            if (list->len == 0) /* first turn i.e clean old list */
-                panel_clean_dir (current_panel);
             list->list[list->len].fnamelen = strlen (p);
             list->list[list->len].fname = g_strndup (p, list->list[list->len].fnamelen);
             list->list[list->len].f.marked = 0;
@@ -1820,21 +1819,9 @@ do_find (const char *start_dir, ssize_t start_dir_len, const char *ignore_dirs,
                 rotate_dash (TRUE);
         }
 
-        if (list->len != 0)
-        {
-            current_panel->is_panelized = TRUE;
-
-            /* absolute path */
-            if (start_dir_len < 0)
-            {
-                int ret;
-                vfs_path_free (current_panel->cwd_vpath);
-                current_panel->cwd_vpath = vfs_path_from_str (PATH_SEP_STR);
-                ret = chdir (PATH_SEP_STR);
-                (void) ret;
-            }
-            panelize_save_panel (current_panel);
-        }
+        current_panel->is_panelized = TRUE;
+        panelize_absolutize_if_needed (current_panel);
+        panelize_save_panel (current_panel);
     }
 
     g_free (content_pattern);

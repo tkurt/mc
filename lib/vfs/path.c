@@ -1,7 +1,7 @@
 /*
    Virtual File System path handlers
 
-   Copyright (C) 2011-2017
+   Copyright (C) 2011-2018
    Free Software Foundation, Inc.
 
    Written by:
@@ -236,13 +236,11 @@ static void
 vfs_path_url_split (vfs_path_element_t * path_element, const char *path)
 {
     char *pcopy;
-    const char *pend;
     char *colon, *at, *rest;
 
     path_element->port = 0;
 
     pcopy = g_strdup (path);
-    pend = pcopy + strlen (pcopy);
 
     /* search for any possible user */
     at = strrchr (pcopy, '@');
@@ -252,9 +250,12 @@ vfs_path_url_split (vfs_path_element_t * path_element, const char *path)
         rest = pcopy;
     else
     {
+        const char *pend;
         char *inner_colon;
 
+        pend = strchr (at, '\0');
         *at = '\0';
+
         inner_colon = strchr (pcopy, ':');
         if (inner_colon != NULL)
         {
@@ -280,9 +281,9 @@ vfs_path_url_split (vfs_path_element_t * path_element, const char *path)
         colon = strchr (++rest, ']');
         if (colon != NULL)
         {
-            colon[0] = '\0';
-            colon[1] = '\0';
+            *colon = '\0';
             colon++;
+            *colon = '\0';
             path_element->ipv6 = TRUE;
         }
     }
@@ -367,14 +368,13 @@ vfs_path_is_str_path_deprecated (const char *path_str)
 */
 
 static vfs_path_t *
-vfs_path_from_str_deprecated_parser (char *path, vfs_path_flag_t flags)
+vfs_path_from_str_deprecated_parser (char *path)
 {
     vfs_path_t *vpath;
     vfs_path_element_t *element;
     struct vfs_class *class;
     const char *local, *op;
 
-    (void) flags;
     vpath = vfs_path_new ();
 
     while ((class = _vfs_split_with_semi_skip_count (path, &local, &op, 0)) != NULL)
@@ -432,15 +432,14 @@ vfs_path_from_str_deprecated_parser (char *path, vfs_path_flag_t flags)
 */
 
 static vfs_path_t *
-vfs_path_from_str_uri_parser (char *path, vfs_path_flag_t flags)
+vfs_path_from_str_uri_parser (char *path)
 {
     vfs_path_t *vpath;
     vfs_path_element_t *element;
-
     char *url_delimiter;
 
     vpath = vfs_path_new ();
-    vpath->relative = (flags & VPF_NO_CANON) != 0;
+    vpath->relative = path != NULL && !IS_PATH_SEP (*path);
 
     while ((url_delimiter = g_strrstr (path, VFS_PATH_URL_DELIMITER)) != NULL)
     {
@@ -739,9 +738,9 @@ vfs_path_from_str_flags (const char *path_str, vfs_path_flag_t flags)
         return NULL;
 
     if ((flags & VPF_USE_DEPRECATED_PARSER) != 0 && vfs_path_is_str_path_deprecated (path))
-        vpath = vfs_path_from_str_deprecated_parser (path, flags);
+        vpath = vfs_path_from_str_deprecated_parser (path);
     else
-        vpath = vfs_path_from_str_uri_parser (path, flags);
+        vpath = vfs_path_from_str_uri_parser (path);
 
     vpath->str = vfs_path_to_str_flags (vpath, 0, flags);
     g_free (path);

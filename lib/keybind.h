@@ -137,7 +137,7 @@ enum
     CK_Find,
     CK_DirSize,
     CK_HotListAdd,
-    CK_PanelListingChange,
+    CK_SetupListingFormat,
     CK_CompareDirs,
     CK_OptionsVfs,
     CK_OptionsConfirm,
@@ -167,7 +167,6 @@ enum
     CK_VfsList,
     CK_SaveSetup,
     CK_LinkSymbolic,
-    CK_PanelListingSwitch,
     CK_ShowHidden,
     CK_PanelTree,
     CK_Tree,
@@ -210,6 +209,7 @@ enum
     CK_SortByMTime,
     CK_ScrollLeft,
     CK_ScrollRight,
+    CK_CycleListingFormat,
 
     /* dialog */
     CK_Ok = 300L,

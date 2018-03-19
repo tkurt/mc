@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Midnight Commander\n"
 "Report-Msgid-Bugs-To: http://www.midnight-commander.org/\n"
-"POT-Creation-Date: 2017-03-04 18:55+0100\n"
-"PO-Revision-Date: 2017-02-25 09:22+0000\n"
+"POT-Creation-Date: 2018-02-03 18:28+0300\n"
+"PO-Revision-Date: 2017-09-19 09:10+0000\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/mc/mc/language/ja/)\n"
 "Language: ja\n"
@@ -573,7 +573,6 @@ msgstr "テンポラリファイルが %s 上に作成されます\n"
 msgid "Temporary files will not be created\n"
 msgstr "テンポラリファイルは作成されません\n"
 
-#, c-format
 msgid "Press any key to continue..."
 msgstr "なにかキーを押せば続行します..."
 
@@ -642,6 +641,10 @@ msgstr "印刷設定オプション"
 msgid "Print last working directory to specified file"
 msgstr ""
 
+#, fuzzy
+msgid "<file>"
+msgstr "file"
+
 msgid "Enables subshell support (default)"
 msgstr "サブシェルのサポート (デフォルト)"
 
@@ -654,11 +657,18 @@ msgstr "ftp の対話記録を指定したファイルに保存"
 msgid "Set debug level"
 msgstr ""
 
+msgid "<integer>"
+msgstr ""
+
 msgid "Launches the file viewer on a file"
 msgstr "ファイルビューアを起動"
 
 msgid "Edit files"
 msgstr ""
+
+#, fuzzy
+msgid "<file> ..."
+msgstr "ファイルを開く(&O)..."
 
 msgid "Forces xterm features"
 msgstr "強制的に xterm 機能を使う"
@@ -698,6 +708,9 @@ msgstr "カラーモードでの実行を要求"
 
 msgid "Specifies a color configuration"
 msgstr "カラー設定を指定"
+
+msgid "<string>"
+msgstr ""
 
 msgid "Show mc with specified skin"
 msgstr ""
@@ -741,13 +754,16 @@ msgstr ""
 msgid "Color options"
 msgstr ""
 
-msgid "+number"
+msgid "[+lineno] file1[:lineno] [file2[:lineno]...]"
+msgstr ""
+
+msgid "file"
+msgstr "file"
+
+msgid "file1 file2"
 msgstr ""
 
 msgid "[this_dir] [other_panel_dir]"
-msgstr ""
-
-msgid "Set initial line number for the internal editor"
 msgstr ""
 
 msgid ""
@@ -1710,7 +1726,6 @@ msgstr ""
 msgid "The shell is already running a command"
 msgstr ""
 
-#, c-format
 msgid "Type 'exit' to return to the Midnight Commander"
 msgstr ""
 
@@ -1745,6 +1760,16 @@ msgid ""
 msgstr ""
 "chmod \"%s\" ができません\n"
 "%s"
+
+msgid "&Ignore"
+msgstr ""
+
+#, fuzzy
+msgid "Ignore &all"
+msgstr "すべて設定(&a)"
+
+msgid "&Retry"
+msgstr "再試行(&R)"
 
 #, c-format
 msgid ""
@@ -1942,8 +1967,8 @@ msgstr ""
 msgid "User &mini status"
 msgstr ""
 
-msgid "Listing mode"
-msgstr "一覧形式"
+msgid "Listing format"
+msgstr ""
 
 msgid "Executable &first"
 msgstr ""
@@ -2378,9 +2403,6 @@ msgstr ""
 msgid "%o %d %f%m"
 msgstr "%o %d %f%m"
 
-msgid "file"
-msgstr "file"
-
 msgid "files"
 msgstr "files"
 
@@ -2418,11 +2440,24 @@ msgid ""
 "%s"
 msgstr ""
 
+#, c-format
+msgid ""
+"\"%s\"\n"
+"and\n"
+"\"%s\"\n"
+"are the same directory"
+msgstr ""
+
+#, c-format
+msgid ""
+"\"%s\"\n"
+"and\n"
+"\"%s\"\n"
+"are the same file"
+msgstr ""
+
 msgid "Ski&p all"
 msgstr "すべて飛ばす(&P)"
-
-msgid "&Retry"
-msgstr "再試行(&R)"
 
 #, c-format
 msgid ""
@@ -2442,16 +2477,14 @@ msgstr "なし(&E)"
 
 #, c-format
 msgid ""
-"Cannot stat file \"%s\"\n"
+"Cannot remove file \"%s\"\n"
 "%s"
 msgstr ""
 
 #, c-format
 msgid ""
-"\"%s\"\n"
-"and\n"
-"\"%s\"\n"
-"are the same file"
+"Cannot stat file \"%s\"\n"
+"%s"
 msgstr ""
 
 #, c-format
@@ -2466,18 +2499,6 @@ msgstr ""
 
 #, c-format
 msgid ""
-"Cannot remove file \"%s\"\n"
-"%s"
-msgstr ""
-
-#, c-format
-msgid ""
-"Cannot delete file \"%s\"\n"
-"%s"
-msgstr ""
-
-#, c-format
-msgid ""
 "Cannot remove directory \"%s\"\n"
 "%s"
 msgstr ""
@@ -2486,6 +2507,21 @@ msgstr ""
 msgid ""
 "Cannot overwrite directory \"%s\"\n"
 "%s"
+msgstr ""
+
+#, c-format
+msgid ""
+"Cannot overwrite file \"%s\"\n"
+"%s"
+msgstr ""
+
+#, c-format
+msgid ""
+"Cannot move directory \"%s\" to \"%s\"\n"
+"%s"
+msgstr ""
+
+msgid "Cannot operate on \"..\"!"
 msgstr ""
 
 #, c-format
@@ -2615,30 +2651,7 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid ""
-"\"%s\"\n"
-"and\n"
-"\"%s\"\n"
-"are the same directory"
-msgstr ""
-
-#, c-format
-msgid ""
-"Cannot overwrite file \"%s\"\n"
-"%s"
-msgstr ""
-
-#, c-format
-msgid ""
-"Cannot move directory \"%s\" to \"%s\"\n"
-"%s"
-msgstr ""
-
-#, c-format
 msgid "Directories: %zu, total size: %s"
-msgstr ""
-
-msgid "Cannot operate on \"..\"!"
 msgstr ""
 
 msgid "Sorry, I could not put the job in background"
@@ -3063,8 +3076,8 @@ msgstr ""
 msgid "&Info"
 msgstr "情報(&I)"
 
-msgid "&Listing mode..."
-msgstr "一覧方法(&L)..."
+msgid "&Listing format..."
+msgstr ""
 
 msgid "&Sort order..."
 msgstr "整列順(&S)..."
@@ -3491,50 +3504,6 @@ msgstr ""
 "ファイル %s に書き込めません:\n"
 "%s\n"
 
-msgid "Debug"
-msgstr "デバッグ"
-
-msgid "ERROR:"
-msgstr "エラー:"
-
-msgid "True:"
-msgstr "真:"
-
-msgid "False:"
-msgstr "偽:"
-
-msgid "Error calling program"
-msgstr ""
-
-msgid "Warning -- ignoring file"
-msgstr ""
-
-#, c-format
-msgid ""
-"File %s is not owned by root or you or is world writable.\n"
-"Using it may compromise your security"
-msgstr ""
-"ファイル %s は root やあなたの所有物ではないのに誰でも書き込み\n"
-"可能です.利用するとあなたのセキュリティを侵害する恐れがあります"
-
-msgid "Format error on file Extensions File"
-msgstr ""
-
-#, c-format
-msgid "The %%var macro has no default"
-msgstr ""
-
-#, c-format
-msgid "The %%var macro has no variable"
-msgstr ""
-
-#, c-format
-msgid "No suitable entries found in %s"
-msgstr ""
-
-msgid "User menu"
-msgstr "ユーザーのメニュー"
-
 msgid "Help file format error\n"
 msgstr ""
 
@@ -3739,6 +3708,50 @@ msgstr "ユーザーのデータ"
 
 msgid "Cache directory:"
 msgstr "キャッシュのディレクトリー:"
+
+msgid "Debug"
+msgstr "デバッグ"
+
+msgid "ERROR:"
+msgstr "エラー:"
+
+msgid "True:"
+msgstr "真:"
+
+msgid "False:"
+msgstr "偽:"
+
+msgid "Error calling program"
+msgstr ""
+
+msgid "Warning -- ignoring file"
+msgstr ""
+
+#, c-format
+msgid ""
+"File %s is not owned by root or you or is world writable.\n"
+"Using it may compromise your security"
+msgstr ""
+"ファイル %s は root やあなたの所有物ではないのに誰でも書き込み\n"
+"可能です.利用するとあなたのセキュリティを侵害する恐れがあります"
+
+msgid "Format error on file Extensions File"
+msgstr ""
+
+#, c-format
+msgid "The %%var macro has no default"
+msgstr ""
+
+#, c-format
+msgid "The %%var macro has no variable"
+msgstr ""
+
+#, c-format
+msgid "No suitable entries found in %s"
+msgstr ""
+
+msgid "User menu"
+msgstr "ユーザーのメニュー"
 
 #, c-format
 msgid ""
@@ -4024,6 +4037,10 @@ msgstr ""
 
 msgid "sftp: No file handler data present for reading file"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "sftp: socket error: %s"
+msgstr "ftpfs: 中断: %s"
 
 #, c-format
 msgid "sftp: (Ctrl-G break) Listing... %s"

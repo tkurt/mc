@@ -69,7 +69,7 @@ EXTFS_OUT = 			\
 	urar			\
 	uzip			\
 	uzoo			\
-	xnet			
+	xnet			\
 	xsmb
 
 if ENABLE_VFS

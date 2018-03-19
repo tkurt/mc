@@ -1,0 +1,5 @@
+ENTRY "~r/root" URL "/root"
+ENTRY "~ddownloads" URL "/home/user/Downloads"
+ENTRY "~mmusic" URL "/home/user/Music"
+ENTRY "~vvideo" URL "/home/user/Videos"
+ENTRY "~o/sftp:/user@rpi/home" URL "/sftp://user:password@192.168.0.29/home/user"

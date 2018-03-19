@@ -10,7 +10,7 @@
    Janne Kukonlehto added much error recovery to them for being used
    in an interactive program.
 
-   Copyright (C) 1994-2017
+   Copyright (C) 1994-2018
    Free Software Foundation, Inc.
 
    Written by:
@@ -702,7 +702,7 @@ check_progress_buttons (file_op_context_t * ctx)
         ctx->suspended = !ctx->suspended;
         place_progress_buttons (ui->op_dlg, ctx->suspended);
         dlg_redraw (ui->op_dlg);
-        /* fallthrough */
+        MC_FALLTHROUGH;
     default:
         if (ctx->suspended)
             goto get_event;
@@ -890,12 +890,12 @@ file_progress_show (file_op_context_t * ctx, off_t done, off_t total,
 
     if (total == 0)
     {
-        gauge_show (ui->progress_file_gauge, 0);
+        gauge_show (ui->progress_file_gauge, FALSE);
         return;
     }
 
     gauge_set_value (ui->progress_file_gauge, 1024, (int) (1024 * done / total));
-    gauge_show (ui->progress_file_gauge, 1);
+    gauge_show (ui->progress_file_gauge, TRUE);
 
     if (!force_update)
         return;
@@ -964,12 +964,12 @@ file_progress_show_total (file_op_total_context_t * tctx, file_op_context_t * ct
     if (ui->progress_total_gauge != NULL)
     {
         if (ctx->progress_bytes == 0)
-            gauge_show (ui->progress_total_gauge, 0);
+            gauge_show (ui->progress_total_gauge, FALSE);
         else
         {
             gauge_set_value (ui->progress_total_gauge, 1024,
                              (int) (1024 * copied_bytes / ctx->progress_bytes));
-            gauge_show (ui->progress_total_gauge, 1);
+            gauge_show (ui->progress_total_gauge, TRUE);
         }
     }
 
@@ -1143,9 +1143,11 @@ file_progress_real_query_replace (file_op_context_t * ctx,
     case REPLACE_REGET:
         /* Careful: we fall through and set do_append */
         ctx->do_reget = _d_stat->st_size;
+        MC_FALLTHROUGH;
 
     case REPLACE_APPEND:
         ctx->do_append = TRUE;
+        MC_FALLTHROUGH;
 
     case REPLACE_YES:
     case REPLACE_ALWAYS:

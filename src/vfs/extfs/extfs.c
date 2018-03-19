@@ -1,7 +1,7 @@
 /*
    Virtual File System: External file system.
 
-   Copyright (C) 1995-2017
+   Copyright (C) 1995-2018
    Free Software Foundation, Inc.
 
    Written by:
@@ -1099,6 +1099,9 @@ extfs_stat_move (struct stat *buf, const struct inode *inode)
     buf->st_atime = inode->atime;
     buf->st_mtime = inode->mtime;
     buf->st_ctime = inode->ctime;
+#ifdef HAVE_STRUCT_STAT_ST_MTIM
+    buf->st_atim.tv_nsec = buf->st_mtim.tv_nsec = buf->st_ctim.tv_nsec = 0;
+#endif
 }
 
 /* --------------------------------------------------------------------------------------------- */

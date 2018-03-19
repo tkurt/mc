@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Midnight Commander\n"
 "Report-Msgid-Bugs-To: http://www.midnight-commander.org/\n"
-"POT-Creation-Date: 2017-03-04 18:55+0100\n"
-"PO-Revision-Date: 2017-02-25 09:22+0000\n"
+"POT-Creation-Date: 2018-02-03 18:28+0300\n"
+"PO-Revision-Date: 2017-09-23 18:02+0000\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/mc/mc/language/fr/)\n"
 "Language: fr\n"
@@ -112,9 +112,11 @@ msgid ""
 "Number out of range (should be in byte range, 0 <= n <= 0xFF, expressed in "
 "hex)"
 msgstr ""
+"Nombre hors de portée (devrait être dans la gamme d'octet : 0 <= n <= 0xFF, "
+"exprimé en hexa)"
 
 msgid "Invalid character"
-msgstr ""
+msgstr "Caractère invalide"
 
 msgid "Unmatched quotes character"
 msgstr ""
@@ -598,7 +600,6 @@ msgstr "Les fichiers temporaires seront crées dans %s\n"
 msgid "Temporary files will not be created\n"
 msgstr "Les fichiers temporaires ne seront pas créés\n"
 
-#, c-format
 msgid "Press any key to continue..."
 msgstr "Appuyez sur une touche pour continuer..."
 
@@ -669,6 +670,10 @@ msgstr "Imprimer les options de configuration"
 msgid "Print last working directory to specified file"
 msgstr "Écrit le dernier répertoire courant dans le fichier donné"
 
+#, fuzzy
+msgid "<file>"
+msgstr "fichier"
+
 msgid "Enables subshell support (default)"
 msgstr "Active le support des sous-shells (par défaut)"
 
@@ -681,11 +686,18 @@ msgstr "Consigne les échanges FTP dans le fichier spécifié"
 msgid "Set debug level"
 msgstr "Définit le niveau de débogage"
 
+msgid "<integer>"
+msgstr ""
+
 msgid "Launches the file viewer on a file"
 msgstr "Lance la visionneuse sur un fichier"
 
 msgid "Edit files"
 msgstr "Éditer les fichiers"
+
+#, fuzzy
+msgid "<file> ..."
+msgstr "&Ouvrir un fichier..."
 
 msgid "Forces xterm features"
 msgstr "Force un attribut xterm"
@@ -727,6 +739,9 @@ msgstr "Demande à fonctionner en mode couleur"
 
 msgid "Specifies a color configuration"
 msgstr "Spécifie une configuration de couleurs"
+
+msgid "<string>"
+msgstr ""
 
 msgid "Show mc with specified skin"
 msgstr "Afficher mc avec le thème donné"
@@ -796,14 +811,17 @@ msgstr ""
 msgid "Color options"
 msgstr "Options de couleur"
 
-msgid "+number"
-msgstr "+nombre"
+msgid "[+lineno] file1[:lineno] [file2[:lineno]...]"
+msgstr ""
+
+msgid "file"
+msgstr "fichier"
+
+msgid "file1 file2"
+msgstr ""
 
 msgid "[this_dir] [other_panel_dir]"
 msgstr "[ce_rép] [autre_rép_panneau]"
-
-msgid "Set initial line number for the internal editor"
-msgstr "Définit le numéro de ligne initial pour l'éditeur interne"
 
 msgid ""
 "\n"
@@ -1801,7 +1819,6 @@ msgstr "Impossible de récupérer une copie locale de %s "
 msgid "The shell is already running a command"
 msgstr " Le shell est déjà en train d'exécuter une commande "
 
-#, c-format
 msgid "Type 'exit' to return to the Midnight Commander"
 msgstr "Tapez « exit » pour retourner à Midnight Commander"
 
@@ -1836,6 +1853,17 @@ msgid ""
 msgstr ""
 "Ne peut changer les permissions de « %s »\n"
 "%s"
+
+#, fuzzy
+msgid "&Ignore"
+msgstr "&Ignorer le verrou"
+
+#, fuzzy
+msgid "Ignore &all"
+msgstr "&Ignorer le verrou"
+
+msgid "&Retry"
+msgstr "&Réessayer"
 
 #, c-format
 msgid ""
@@ -2039,8 +2067,8 @@ msgstr "colonnes"
 msgid "User &mini status"
 msgstr "&Mini-statut utilisateur"
 
-msgid "Listing mode"
-msgstr "Mode de listage"
+msgid "Listing format"
+msgstr ""
 
 msgid "Executable &first"
 msgstr "Exécutable en &premier"
@@ -2488,9 +2516,6 @@ msgstr "%o %f%n\"%s\"%m"
 msgid "%o %d %f%m"
 msgstr "%o %d %f%m"
 
-msgid "file"
-msgstr "fichier"
-
 msgid "files"
 msgstr "fichiers"
 
@@ -2518,15 +2543,11 @@ msgstr ""
 "Impossible de lire le lien source « %s »\n"
 "%s"
 
-#, fuzzy
 msgid ""
 "Cannot make stable symlinks across non-local filesystems:\n"
 "\n"
 "Option Stable Symlinks will be disabled"
 msgstr ""
-"Il est impossible de réaliser des liens symboliques stables entre systèmes "
-"de fichiers non-locaux : \n"
-"désactivation de l'option \"Liens symboliques stables\"."
 
 #, c-format
 msgid ""
@@ -2536,11 +2557,32 @@ msgstr ""
 "Impossible de créer le lien symbolique cible « %s »\n"
 "%s"
 
+#, c-format
+msgid ""
+"\"%s\"\n"
+"and\n"
+"\"%s\"\n"
+"are the same directory"
+msgstr ""
+"« %s »\n"
+"et\n"
+"« %s »\n"
+"sont les mêmes répertoires"
+
+#, c-format
+msgid ""
+"\"%s\"\n"
+"and\n"
+"\"%s\"\n"
+"are the same file"
+msgstr ""
+"« %s »\n"
+"et\n"
+"« %s »\n"
+"sont identiques"
+
 msgid "Ski&p all"
 msgstr "Sauter &tout"
-
-msgid "&Retry"
-msgstr "&Réessayer"
 
 #, c-format
 msgid ""
@@ -2565,23 +2607,19 @@ msgstr "&Aucun"
 
 #, c-format
 msgid ""
+"Cannot remove file \"%s\"\n"
+"%s"
+msgstr ""
+"Impossible d'effacer le fichier « %s »\n"
+"%s"
+
+#, c-format
+msgid ""
 "Cannot stat file \"%s\"\n"
 "%s"
 msgstr ""
 "Impossible d'obtenir les caractéristiques du fichier « %s »\n"
 "%s"
-
-#, c-format
-msgid ""
-"\"%s\"\n"
-"and\n"
-"\"%s\"\n"
-"are the same file"
-msgstr ""
-"« %s »\n"
-"et\n"
-"« %s »\n"
-"sont identiques"
 
 #, c-format
 msgid "Cannot overwrite directory \"%s\""
@@ -2593,22 +2631,6 @@ msgid ""
 "%s"
 msgstr ""
 "Impossible de déplacer le fichier « %s » vers « %s »\n"
-"%s"
-
-#, c-format
-msgid ""
-"Cannot remove file \"%s\"\n"
-"%s"
-msgstr ""
-"Impossible d'effacer le fichier « %s »\n"
-"%s"
-
-#, c-format
-msgid ""
-"Cannot delete file \"%s\"\n"
-"%s"
-msgstr ""
-"Impossible d'effacer le fichier « %s »\n"
 "%s"
 
 #, c-format
@@ -2626,6 +2648,25 @@ msgid ""
 msgstr ""
 "Impossible d'écraser le répertoire « %s »\n"
 "%s"
+
+#, c-format
+msgid ""
+"Cannot overwrite file \"%s\"\n"
+"%s"
+msgstr ""
+"Impossible d'écraser le fichier « %s »\n"
+"%s"
+
+#, c-format
+msgid ""
+"Cannot move directory \"%s\" to \"%s\"\n"
+"%s"
+msgstr ""
+"Impossible de déplacer le répertoire de « %s » vers « %s »\n"
+"%s"
+
+msgid "Cannot operate on \"..\"!"
+msgstr "Impossible de travailler avec « .. » !"
 
 #, c-format
 msgid ""
@@ -2792,39 +2833,8 @@ msgstr ""
 "%s"
 
 #, c-format
-msgid ""
-"\"%s\"\n"
-"and\n"
-"\"%s\"\n"
-"are the same directory"
-msgstr ""
-"« %s »\n"
-"et\n"
-"« %s »\n"
-"sont les mêmes répertoires"
-
-#, c-format
-msgid ""
-"Cannot overwrite file \"%s\"\n"
-"%s"
-msgstr ""
-"Impossible d'écraser le fichier « %s »\n"
-"%s"
-
-#, c-format
-msgid ""
-"Cannot move directory \"%s\" to \"%s\"\n"
-"%s"
-msgstr ""
-"Impossible de déplacer le répertoire de « %s » vers « %s »\n"
-"%s"
-
-#, c-format
 msgid "Directories: %zu, total size: %s"
 msgstr "Répertoires : %zu, taille totale : %s"
-
-msgid "Cannot operate on \"..\"!"
-msgstr "Impossible de travailler avec « .. » !"
 
 msgid "Sorry, I could not put the job in background"
 msgstr "Impossible de mettre le processus en arrière-plan"
@@ -3254,8 +3264,8 @@ msgstr "&Vue rapide"
 msgid "&Info"
 msgstr "&Informations"
 
-msgid "&Listing mode..."
-msgstr "&Mode de listage..."
+msgid "&Listing format..."
+msgstr ""
 
 msgid "&Sort order..."
 msgstr "&Ordre de tri..."
@@ -3688,52 +3698,6 @@ msgstr ""
 "Ne peut écrire dans le fichier « %s » :\n"
 "%s\n"
 
-msgid "Debug"
-msgstr "Débogage"
-
-msgid "ERROR:"
-msgstr "ERREUR :"
-
-msgid "True:"
-msgstr "Vrai :"
-
-msgid "False:"
-msgstr "Faux :"
-
-msgid "Error calling program"
-msgstr "Erreur de lancement du programme"
-
-msgid "Warning -- ignoring file"
-msgstr "Attention -- ignorer le fichier"
-
-#, c-format
-msgid ""
-"File %s is not owned by root or you or is world writable.\n"
-"Using it may compromise your security"
-msgstr ""
-"Le fichier « %s » n'appartient ni à vous ni au super-utilisateur ou alors il "
-"est\n"
-"modifiable par tout le monde. Son utilisation peut compromettre votre "
-"sécurité"
-
-msgid "Format error on file Extensions File"
-msgstr "Erreur de format du fichier de paramères d'extensions"
-
-#, c-format
-msgid "The %%var macro has no default"
-msgstr "La macro %%var n'a pas de valeur par default"
-
-#, c-format
-msgid "The %%var macro has no variable"
-msgstr "La macro %%var n'a aucune variable"
-
-#, c-format
-msgid "No suitable entries found in %s"
-msgstr "Aucune entrée trouvée pour %s"
-
-msgid "User menu"
-msgstr "Menu utilisateur"
-
 msgid "Help file format error\n"
 msgstr "Mauvais format du fichier d'aide\n"
 
@@ -3951,6 +3915,52 @@ msgstr "Données utilisateur"
 
 msgid "Cache directory:"
 msgstr "Répertoire du cache :"
+
+msgid "Debug"
+msgstr "Débogage"
+
+msgid "ERROR:"
+msgstr "ERREUR :"
+
+msgid "True:"
+msgstr "Vrai :"
+
+msgid "False:"
+msgstr "Faux :"
+
+msgid "Error calling program"
+msgstr "Erreur de lancement du programme"
+
+msgid "Warning -- ignoring file"
+msgstr "Attention -- ignorer le fichier"
+
+#, c-format
+msgid ""
+"File %s is not owned by root or you or is world writable.\n"
+"Using it may compromise your security"
+msgstr ""
+"Le fichier « %s » n'appartient ni à vous ni au super-utilisateur ou alors il "
+"est\n"
+"modifiable par tout le monde. Son utilisation peut compromettre votre "
+"sécurité"
+
+msgid "Format error on file Extensions File"
+msgstr "Erreur de format du fichier de paramères d'extensions"
+
+#, c-format
+msgid "The %%var macro has no default"
+msgstr "La macro %%var n'a pas de valeur par default"
+
+#, c-format
+msgid "The %%var macro has no variable"
+msgstr "La macro %%var n'a aucune variable"
+
+#, c-format
+msgid "No suitable entries found in %s"
+msgstr "Aucune entrée trouvée pour %s"
+
+msgid "User menu"
+msgstr "Menu utilisateur"
 
 #, c-format
 msgid ""
@@ -4245,6 +4255,10 @@ msgid "sftp: No file handler data present for reading file"
 msgstr ""
 "sftp : ne peut lire le fichier, aucune association de fichiers disponible"
 
+#, fuzzy, c-format
+msgid "sftp: socket error: %s"
+msgstr "ftpfs : erreur d'abandon : %s"
+
 #, c-format
 msgid "sftp: (Ctrl-G break) Listing... %s"
 msgstr "sftp : (Ctrl-G break) Listing... %s"
@@ -4492,3 +4506,10 @@ msgstr "Continuer à partir du début ?"
 msgid "Cannot fetch a local copy of /ftp://some.host/editme.txt"
 msgstr ""
 "Impossible de récupérer localement le fichier /ftp://some.host/editme.txt"
+
+#~ msgid ""
+#~ "Cannot delete file \"%s\"\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Impossible d'effacer le fichier « %s »\n"
+#~ "%s"
